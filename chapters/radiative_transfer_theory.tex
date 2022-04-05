@@ -1,0 +1,284 @@
+
+This chapter now turns to the physical principles that enable satellites to
+sense clouds and precipitation from space. The remote sensing of any atmospheric
+quantity is based on its interaction with electromagnetic radiation. The
+measured radiation can be used to infer physical properties of atmospheric
+quantities by inverting the interaction between radiation and the atmosphere.
+Doing so, requires a quantitative model of the propagation of radiation through
+the atmosphere. Such a model is provided by the physical theory of radiative
+transfer.
+
+Since radiative transfer theory is fundamental to atmospheric remote sensing
+(even, as we will see later on, it is not used directly
+in the retrieval), this section provides an introduction to radiative transfer
+in the atmosphere. The focus is put on the interaction of radiation with
+hydrometeors. This presentation is mostly based on the more comprehensive texts
+by Mishchenko et al. (2002), Thomas and Stamnes (2002), and Wallace and Hobbs
+(2006).
+
+
+\section{Radiative transfer theory}
+
+Radiative transfer theory describes the propagation of electromagnetic radiation
+through a medium. It is derived from electromagnetic field theory and provides
+simplified model the transfer of energy by a perfectly monochromatic parallel
+beam of light. Electromagnetic sensors measure the mean total energy that is
+transferred by the electromagnetic radiation as well the correlations between
+the components of the beam's electric field, which is referred to as the beam's
+\textit{polarization state}. The radiation measured by any sensor at position $\bm{r}$ pointing in direction $\bm{-n}$ is fully described by the four dimensional stokes vector
+\begin{align}
+  \bm{I}(\bm{r}, \bm{n}) &= \left [ \begin{array}{c}
+    I \\
+    Q \\
+    U \\
+    V \\
+    \end{array} \right ]
+\end{align}
+
+The components $I, Q, U$ and $V$ are called the stokes parameters and have the
+unit of monochromatic energy flux. Since the stokes vector fully describes the
+state of a monochromatic beam of radiation to the extent that it can be
+measured, any observation from an electromagnetic sensor can be derived from the
+stokes vector at the position of the sensor. The main challenge of atmospheric
+radiative transfer is thus to model the evolution of $\bm{I}$ as it propagates
+through the atmosphere.
+
+\subsection{Interactions with matter}
+
+Radiative transfer theory distinguishes three fundamental processes through which
+matter interacts which radiation. These are  (1) the emission of electromagnetic radiation, (2) its absorption and (3) scattering.
+
+\subsubsection{Emission}
+
+At temperatures above absolute zero, all matter emits radiation through the
+process of thermal emission. Thermal emission occurs when matter transitions
+from a quantum mechanical state of higher energy to one of lower energy which
+causes the excess energy to be emitted in the form of radiation. The amount of
+radiation of a given frequency $\nu$ emitted by a body depends on its
+temperature and material. It is typically modeled using a material-dependent
+emissivity vector $\vec{e}$, which relates the emission of the material to that
+of an ideal black body, i. e. a material that absorbs all incoming radiation:
+ \begin{align}
+   \label{eq:emissivity}
+   \vec{I} &= (\vec{e} \cdot ds) B(T, \nu)
+ \end{align}
+ Here $B(T, \nu)$ is the radiation emitted by a black body at temperature $T$
+ and frequency $\nu$, which is described by Planck's law
+ \begin{align}
+   B(T, \nu) &= \frac{2 \nu^2}{c^2}\frac{h\nu}{e^{\frac{h\nu}{k T}} - 1},
+ \end{align}
+ with $c$ is the speed of light in vacuum, $h$  the Planck constant and $k$
+ the Boltzmann constant.
+
+The emissivity vector defined above is a differential quantity that describes
+emission from a volume element along an infinitesimal step along the propagation
+path. This means that in order to obtain the emission from a finite volume, the
+emission must be integrated along the propagation path. For a material that is
+opaque, there is no need to integrate over the full volume, since only its
+surface will contribute to the observed emission. The emissivity of a surface
+can be described using an emissivity vector $\vec{e}$ in the same way as for
+emission from a volume, with the difference that its components are unit less
+and integration over the propagation path is not required.
+
+\subsubsection{Absorption}
+
+Absorption refers to the process of radiation being converted into internal
+energy of the matter it interacts with. Mathematically, this process is
+described by the absorption vector $\vec{\alpha}$, defined as the fraction of
+the incoming radiation that is absorbed along an infinitesimal distance $ds$
+along the propagation path:
+\begin{align}
+\vec{I}_\text{absorbed} &= (\vec{\alpha} \cdot\ ds) \odot \vec{I}
+\end{align}
+Here $\odot$ denotes the element-wise product of the absorption vector and
+the Stokes vector $\vec{I}$ of the incoming radiation. Absorption may be
+understood as the inverse process of thermal emission. Formally, this is
+expressed by Kirhoff's  law of radiation
+\begin{align}
+  \vec{\alpha} &= \vec{\epsilon},
+\end{align}
+which states that the absorption vector is identical to the emissivity
+vector defined in Eq.~\ref{eq:emissivity}.
+This law is applicable to all matter in the atmosphere given that it is in a
+state of local thermal equilibrium (LTE). LTE occurs when the density of matter
+is sufficiently high so that the population rates of energy states above the
+ground state are determined by thermal collisions rather than the absorption of
+radiation. This decouples the emission of radiation from the radiation field,
+allowing the simplified treatment of matter as thermal emitters with the
+emission rates independent of the radiation field. LTE is a valid assumption for
+radiative transfer in the troposphere.
+
+\subsubsection{Scattering}
+
+When a beam of radiation impinges upon a particle, their interaction may cause a
+deviation of parts of the beam from the original propagation path. To first
+order, scattering decreases the intensity of the beam. This particular process
+is referred to as single scattering. As it propagates through the atmosphere,
+the intensity of a beam is decreased by the effects of absorption and single
+scattering. The combination of these two processes is referred to as attenuation
+or extinction. As the rate of scattering increases, also the effect radiation
+that is being scattered into the beam has to be taken into account.
+
+Mathematically, the scattering of a beam of light propagating in direction
+$\vec{n}$ into the direction $\vec{\hat{n}}$ is described by the phase
+matrix $\mat{Z}(\vec{\hat{n}}, \vec{n})$:
+\begin{align}
+  \vec{I}_\text{scattered}(\vec{\hat{n}}) &= \mat{Z}(\vec{\hat{n}}, \vec{n}) \vec{I}(\vec{n})
+\end{align}
+The combined, attenuating effects of scattering and absorption are given by
+the attenuation matrix $\mat{K}$, which is the sum of the absorption vector
+$\vec{\alpha}$ and the fraction of radiation scattered away from the propagation
+path:
+\newcommand*{\vertbar}{\rule[-1ex]{0.5pt}{2.5ex}}
+\newcommand*{\horzbar}{\rule[.5ex]{2.5ex}{0.5pt}}
+\begin{align}
+  \vec{K} &=
+  \left [ \begin{array}{cccc}
+      \vertbar & \vertbar & \vertbar & \vertbar \\
+      \vec{\alpha} & \vec{0} & \vec{0} & \vec{0} \\
+      \vertbar & \vertbar & \vertbar & \vertbar
+    \end{array} \right ]
+       + \int_{\vec{\hat{n}}} d\vec{\hat{n}}\ \mat{Z}(\vec{\hat{n}}, \vec{n})
+\end{align}
+
+
+\subsection{The radiative transfer equation}
+
+The previous section introduced the fundamental interactions of radiation
+with matter and how they are described mathematically in radiative transfer
+theory. Combining the three processes of emission, absorption and scattering,
+the change that a beam undergoes as it travels a distance $ds$ along its
+propagation path through the atmosphere is described the vector radiative
+transfer equation (VRTE):
+\begin{align}\label{eq:vrte}
+  \frac{d\vec{I}(\vec{n})}{ds} &=
+  -\mat{K}\vec{I}(\vec{n}) + \vec{\alpha} \cdot B_\nu(T) + \int_{\hat{\vec{n}}} d\hat{\vec{n}} \ \mathbf{Z}(\vec{n}, \vec{\hat{n}}) \vec{I}(\vec{\hat{n}}).
+  \end{align}
+
+The first term on the right hand side is the extinction term, which represents
+the combined effects of absorption and scattering of radiation out of the
+propagation direction, and thus acts to decrease the intensity of the radiation
+along the line of sight. The second term represents emission along the line of
+propagation, with the emissivity vector $\bm{\epsilon}$ replaced by the
+absorption vector $\bm{a}$ according to Kirchoff's law of thermal radiation. The
+third term represents the radiation that is scattered into the line of sight.
+Both of these terms act to increase the intensity along the line of sight.
+
+\section{Application to the remote sensing of hydrometeors}
+
+This section applies the principles of radiative transfer theory tha to
+observations of hydrometeors in the atmosphere. The processes through which
+hydrometeors affect satellite observations form the physical basis for the
+remote sensing of clouds and precipitation. The discussion here is limited to
+observations from the visible ($\lambda > \SI{380}{\nano \meter}$) to the
+microwave domain ($\lambda > \SI{1}{\meter}$), which are the frequencies
+that are most commonly used for the remote sensing of hydrometeors.
+
+Most observations of clouds are affected not only by the clouds themselves but
+also by other constituents of the atmosphere. In the following, we will
+therefore first discuss observations without clouds, so called \textit{clear
+  sky} observations, as these form the background for the observations of
+hydrometeors. This is followed by a discussion of the observable effects of
+hydrometeors on the observations, which gives rise to the signal in the
+\textit{all-sky observations} that can be used to infer the physical properties
+of hydrometeors.
+
+\subsection{The Earth's surface}
+
+The characteristics of the Earth's surface vary considerably across the
+electromagnetic spectrum. In the visible range, the surface absorbs large parts
+of the radation. The darkest surfaces are the ocean which absorbs around
+$\SI{95}{\percent}$ of the incoming radiation. Bare land surface and forests are
+considerable brighter but still absorb most ($\approx \SI{75}{\percent}$) of the
+incoming radiation. In contrast to that, snow and ice covered surface reflect
+nearly all of the incoming radiation and thus appear very bright.
+
+In the infrared region of the electromagnetic spectrum the emissivity of the Earth surface
+increases significantly. For wavelengths between $3$ and $\SI{20}{\micro \meter}$ the emissivity
+of most surface types is larger than $0.9$. At these wavelengths the surface is very effective at
+emitting and absorbing radiation and there is little contrast between different surface types.
+
+In the microwave region surface emissivity patterns are more complex. Emissivity
+from land is relatively high, while emissivity from water surfaces is low. The
+contrast between land and surface increases with the wavelength. Emissivities
+from snow and ice are lower than that of most bare land surface but higher than
+that of water. The emissivity furthermore depends on the viewing angle and the
+polarization of the radiation.
+
+While these general tendencies are helpful for a qualitative analysis of
+satellite imagery, it should be noted that they only provide a rough
+characterization of the behavior of the Earth's surface across the
+electromagnetic spectrum. Accurate, quantitative modeling of surface
+emissivities is still an unsolved problem and thus remains an area of
+active research.
+
+
+\subsection{Clear-sky observations}
+
+Satellites observe the Earth at a wide range of different frequencies. Since the
+interactions of the various atmospheric constituents vary across the
+electromagnetic spectrum, observations at different frequencies can provide
+complementary information on the state of the atmosphere.
+
+An important difference that separates observations at short wavelengths from
+those at long wavelength is the source of the observed radiation. At wavelengths
+in the visible and near infrared regions, the largest part of the observed
+radiation stems from the sun. In the thermal infrared region and the even longer
+wavelengths of the microwave region the observed radiation stems from the Earth's
+surface or the atmosphere itself.
+
+Gases affect radiation mostly through absorption and emission, while
+scattering plays a role only in the visible range. The reason for this is
+the small size of the molecules (around $\SI{1}{\nano \meter}$) compared
+to the wavelengths of the radiation.
+
+There is little absorption in the visible range with most of it due to water
+vapor. In the near and thermal infrared absorption increases but is concentrated
+in discrete absorption bands, which makes the opacity of atmosphere highly
+variable across wavelengths. The principal gaseous absorbers in the infrared
+region are water vapor, cabon dioxide and ozone. Absorption also plays an
+important role in the microwave region with significant contributions from water
+vapor, oxygen and ozone. 
+
+Aerosols are significantly larger than the gas molecules in the atmosphere.
+Because of that they affect both VIS and IR observations through scattering. In
+the shortwave part of the electromagnetic spectrum, which is dominated by solar
+radiation, aerosols reflect incoming solar radiation and which typically
+increases the intensity of the measured radiation due to the relative darkness
+of the surface. In the longwave infrared region, the scattering of aerosols acts
+to decrease the intensity of the upwelling radiation from the surface and the
+lower parts of the atmosphere. Aerosols have no significant effect on microwave
+observations.
+
+\subsection{Cloudy sky}
+
+Hydrometeors generally interact with radiation through both scattering and
+absorption. According to the radiative transfer equation in Eq.~\ref{eq:rte},
+clouds thus have two competing effects on observed radiation. At each point
+along the line of sight, the extinction term, which combines the effects of
+absorption and scattering out of the line of sight, acts as a sink of radiation
+moving towards the sensor. At the same time, emission and scattering into the
+line of sight act as source term that increases the observed radiation.
+
+In the visible and near infrared there is little absorption from either water
+or ice. Hydrometeors thus mostly scatter the incoming solar radiation, which
+causes them to appear bright. In the longwave IR both liquid water and ice
+are highly absorptive. Because of this they absorb the upwelling radiation from
+the surface and water vapor below. The radiation observed from the cloud
+is therefore close to that of a blackbody of the ambient temperature at which the cloud
+is located. These obesrvations therefore provide information on the altitude
+of the clouds.
+
+At microwave frequencies liquid water is a significantly more efficient absorber
+than ice. Furthermore, the impact of scattering decreases with increasing
+wavelength. At frequencies around $\sim \SI{50}{\giga \hertz}$ and below,
+scattering is negligible and hydrometeors interact with radiation through
+emission. At these low frequencies, thermal emission from liquid hydrometeors
+over radiometrically cold Ocean surfaces causes a clear signal in the
+observations. At frequencies above $\SI{50}{\giga \hertz}$, observations become
+sensitive to the scattering from snow flakes. This scattering signal is
+important for sensing precipitation over land, where the emission signature from
+liquid hydrometeors may not be detectable due to the much warmer background
+surface.
+
+

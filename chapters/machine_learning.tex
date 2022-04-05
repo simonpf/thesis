@@ -1,0 +1,405 @@
+
+The previous chapter introduced the retrieval problem and its ill-posed
+character, which makes finding a solution to it difficult. One of the proposed
+solutions was to learn the relation between observations and sought-after
+atmospheric properties from previously collected data. Machine learning is the
+computational discipline, that addresses these types of problems and will the
+topic of this chapter.
+
+Machine learning has gone through a wave of immense (renewed) popularity during
+the 2010s triggered by the success of \texit{deep learning} methods in
+addressing a range of computational problems from the fields of computer vision,
+natural language processing and artificial intelligence. This section provides a
+brief introduction of basic concepts of machine learning in general and deep
+learning in particular. This is followed by a discussion of the machine learning
+techniques that were explored in this thesis.
+
+\section{Machine learning}
+
+Machine learning refers to a set of computational techniques
+to learn algorithmic behavior from data. This is in contrast traditional
+programming, which aims to define algorithms that turn input data into a
+certain output. Instead, machine learning starts out with data from which it
+tries to infer the computations required to turn the certain inputs into the
+desired output. The focus of this thesis is  supervised learning, where the
+task is to learn how to produce an output $y$ from an input $x$
+%%
+\footnote{Note that the symbols used for input and target are opposite to how
+they were used in the introduction of retrieval problem in
+Sec.~\ref{sec:remote_sensing:retrieval_problem}. This is because of opposing
+conventions in the fields. We chose here to adhere to the respective conventions
+because it should be clear from the context which of them are used. We hope that
+to cause less confusion of people familiar with the respective subfields.}
+%%
+from a set of pairs $\{(x_i, y_i)\}\text{ for }i = 1, \ldots, N$ of specific inputs values $x_i$ and
+corresponding output values $y_i$. The inputs $x$ and outputs $y$ may
+represent anything from simple numbers to images or texts. For the
+applications considered here, the inputs are typically satellite images and
+the outputs physical quantities.% as illustrated in Fig.~\ref{fig:machine_learning:input_output}.
+
+To illustrate the basic concepts and limitations of shallow machine learning
+techniques, we will apply linear regression, which can considered one of the
+simplest machine learning methods, machine to estimate rain from satellite
+observations. In this case $x$ corresponds to the measured radiation in one
+pixel one channel from geostationary satellite image. We can associate the value
+of the pixel $x$ with a rain rate $y$ measured by a space-born precipitation
+radar. Here, we are looking to find a linear relation between the
+satellite-derived input $x$ and the precipitation $y$. We can do this by
+finding parameters of the linear regression, which minimize the error between 
+the predicted and true precipitation.
+
+To test our retrieval, we apply the linear regression model to the input data.
+The results are shown in panel (c) of Fig.~\ref{fig:machine_learning:linear_regression}.
+Comparing the results to the true values, we find that the linear regression model
+doesn't work very well and that even though we are applying it to the data that were
+used to derive the parameters of the model.
+
+Since simple linear regression does not work well to retrieve precipitation
+from satellite observations, the question becomes how a better model can
+be obtained? In general there are three dimensions
+along which the machine learning model can be improved:
+\begin{description}
+\item[Model expressivity:] Linear regression imposes a linear relationship
+  between input and output, which severely limits that relationships that the
+  model can represent. By increasing the space of functions that the machine
+  learning model can represent, which is referred to as its
+  \textit{expressivity}, it can learn to model more complex relationships from the data.
+\item[Amount of input information:] Since much of the difficulty of solving the retrieval
+  problem is due to the lack of information required accurately predict the atmospheric  
+  state, we ideally want to provide as much information as possible to our model.
+  In the example above, we may for example include measurements from additional channels
+  of spatial information from the observation.
+\item[Amount of data:] Wile this was not the case for the simple example considered here,
+  another important failure mode of machine learning models are incorrect predictions on
+  unseen inputs. Especially when the relationship between inputs and outputs is complex
+  a large number of samples is required to accurately represent these relationships
+  in the data.
+\end{enumerate}
+
+A longstanding challenge in machine learning is the interdependency of the three
+dimensions along which the model can be improved. Increasing the model
+expressivity alone can cause the model to \textit{overfit}. Overfitting occurs
+when a complex model is fitted to too little data, which causes it to learn
+relations that are not actually representative of the true relationship between
+input and outputs. This causes the model to make bad predictions on unseen data.
+Adding more input information may be viewed as one way of increasing model
+expressivity. By increasing the input variable of the model it can represent
+more complex relationships between inputs and outputs. Trying to improve the
+model in this way may thus reinforce overfitting problems as applying a more
+complex model. Overfitting can be counteracted by increasing the amount of data
+that is used to train the model. However, the time and computational resources
+required for that typically increase with the amount of data. If this the case,
+the amount of data that the model can be trained on may be limited by
+computational resources.
+
+Machine learning models thus traditionally require careful tuning to the task at
+hand. Especially the trade-off between model expressivity and the amount of data
+that can be used to train the model required a multi-disciplinary approach that
+combines domain-specific knowledge with machine-learning experience to derive a
+good-performing model. Since model input cannot be arbitrarily increased,
+practitioners typically resorted to \textit{feature engineering}, which consists
+of manually designing input variables that encode useful information for the
+model at hand.
+
+Coming back to the linear-regression precipitation retrieval, it is not
+surprising that the model performed so badly. From the scatter plot in
+Fig.~\ref{fig:machine_learning:input_output} it is clear that the relationship
+between the satellite brightness temperatures and precipitation is highly
+non-linear. A much better fit can be obtained, when the rain rates are
+transformed to log-space. A linear model fitted to log-transformed rain rates
+actually forms the basis the Autoestimator precipitation retrieval
+\citep{vincente98}, which is still used as the basis some currently operational
+precipitation retrievals \citep{siqueira19}.
+
+\section{Deep learning}
+
+The defining characteristic of deep learning paradigm is that it uses models
+that are composed of a hierarchy of simpler models. By scaling these models to
+large amounts of data, deep learning intends to overcome the limitations of
+traditional, \textit{shallow} machine learning methods.
+
+The essential promise of deep learning is that it decouples the dimensions
+along which a machine learning model can be improved. This is achieved
+primarily by scalability. The training time of deep learning methods scale
+linearly with the amount of available data, while the required memory remains
+constant. This allows, at least hypothetically, the amount of ingested
+information as well the model expressivity to be maximized and the amount of
+available data increased until optimal performance is achieved.
+
+
+  \subsection{Neural networks}
+
+  The basic idea of deep learning is to construct expressive models by stacking
+  simple models. The simple linear regression model from above can be extended
+  to a deep model by replacing the simple linear regression that predicts a
+  single value $y$ from a value $x$ with multi-variate multi regression, which
+  predicts an intermediate vector $\mathbf{y}_1$ from an input vector
+  $\mathbf{x}$. The intermediate vector can then be used to as input to another
+  multiple regression model that predicts yet another vector $\mathbf{y}_2$ from
+  the intermediate result vector $\mathbf{y}_1$. Mathematically, this is only
+  meaningful if a non-linear function is applied to the intermediate vector
+  $\mathbf{y}_1$ before it is used as input to the subsequent muti-variate
+  regression model. This simple model of two layers of multi-variate regression
+  and a non-linear \textit{activation function} constitutes the simplest form of
+  a neural network, which constitutes the primary computational model that is
+  used in deep learning.
+
+  More generally, a neural network is just a sequence of consecutive
+  transformations, which are referred to as \textit{layers}. Each of these
+  layers transforms an input vector into an output vector. An important
+  characteristic of this definition of a neural network is its recurrence: A
+  neural network is itself a transformation of an input vector into an output
+  vector and may thus be used as a layer in a larger network. At the same time,
+  however, this obviously makes the defintion of what constitutes a layer in a
+  network somewhat arbitrary.
+
+
+  \subsubsection{The multi-layer perceptron}
+
+  The multi-variate mutiple regression layer discussed constitutes one of the
+  most fundamental transormation for neural networks. It is typically referred
+  to as a fully- or densely-connected layer. Mathematically, this layer
+  implements an affine transformation of the input vector $\bm{x}$ of the form
+  \begin{align}
+    \bm{y} = f(\bm{x}) = \bm{W}x + \bm{b}
+  \end{align}
+  where $\bm{W} \in \mathrm{R}^{m \times n}$ is a matrix of weights $W_{i,j}$
+  for $i = 1, \ldots, m$ and $j = 1 \ldots n$ and $\bm{b}$ a vector of offsets
+  or biases $b_i$ for $i = 1, \ldots m$.
+
+  Fully-connected layers are typically paired with a non-linear function that is
+  applied element-wise to the outputs of the fully-connected layer. This is
+  because without these non-linear activation functions, stacking of
+  fully-connected layers does not increase their expressivity, which in this
+  case depends only on the number of input and output variables.
+
+  There exist a wide range of activation functions. One of the currently most
+  commonly used activation function in deep networks is the Rectified Linear
+  Unit (ReLU).
+  \begin{align}
+    \text{ReLU(x)} = \begin{cases}
+      x & x > 0 \\
+      0 & x \leq 0
+    \end{cases}
+  \end{align}
+  It should be noted, however, that neural network architectures are an active area of
+  research and several alternatives and modifications of the ReLU activation have
+  been proposed.
+
+  The combination of a fully-connected layer and an activation function forms
+  the basic building block of the multi-layer perceptron (MLP), which consists
+  of several stacked layers of these transformations.
+
+\subsubsection{Convolutional neural networks}
+
+Although multi-layer perceptrons can be applied to image data directly by
+flattening the input data into a single vector, this approach was found to not
+work well in practice. The reason for this that the number of parameters in the
+model becomes very large, which makes the model sensitive to overfitting and the
+training more difficult.
+
+A major breakthrough in the application of neural networks to image data, was the
+introduction of the convolutional layer, which replaces the matrix-multiplication
+of the fully-connected layer with a convolution with a learnable filter kernel.
+Let $\bm{X} = X_{i, j}$ for $i = 1, \dots, M, j = 1, \ldots, N$ be an input image
+of size $M \times N$. Given a kernel $\bm{K} = K_{i, j}$ for
+$i = 1, \ldots, k, j = 1, \ldots, k$, the convolution $\bm{Y} = \bm{X} * \bm{K}$ of
+$\bm{X}$ and $K$ is defined as
+\begin{align}
+  Y_{i, j} &= \sum_{l=-k}^{k} \sum_{m=-k}^{k} X_{i + l, j + k} K_{i - l, j -k}
+\end{align}
+The convolution can be visualized as a constant filter mask that is shifted over
+the input image to generate an output image. Since the convolution
+transformation is linear, it is a special case of the fully-connected
+transformation of the corresponding flattened input image.
+
+The convolution operation can thus be seen as a restriction of the more general
+fully-connected layer that encodes two important properties of images into the
+neural network model: Translation invariance and locality. Translation
+invariance refers to the fact that the output of the convolution operation is
+independent of the relative location within the image. It is easy to see that
+this is a very suitable assumption for object detection tasks, since the way an
+object looks is not affected by its position in the image. The property of
+locality refers to the face that the output of the convolution is determined
+only by a limited, connected subset of pixels of the input image, the number of
+which depends on the kernel size $k$. This thus encodes the assumption that for
+understanding the content of a given image region, neighboring pixels should
+have larger relevance than those further away.
+
+
+To allow convolutional neural networks to combine information across different
+image scales, convolutional layers are typically combined with downsampling
+layers that successively decrease the size of the input image. The motivation
+for this architecture is to allow the model learn a hierarchical mapping of the
+low-level input pixels to a reduced amount of high-level information, which is
+relevant for the task that the model is being trained to solve.
+
+\subsubsection{Training}
+
+Now that the basic building blocks of modern neural networks have been
+introduced, the question that remains is how they can be trained to solve a
+given computational task. As mentioned above, we are considering the case of
+supervised learning in which training data in the form of samples from the joint
+distribution of input data $x$ and corresponding outputs $y$ are available.
+
+The basic training approach is the same as the fitting of the parameters of a
+linear regression model, which are found by minimizing a certain loss criterion
+over the training data. For linear regression this is typically the mean squared
+error, which is also commonly used to train neural networks. However, due to
+their non-linearity the parameter optimization of for the neural network can not
+be solved explicitly, as is the case for linear regression. Instead, neural
+networks are trained iteratively by optimizing the loss function using gradient
+descent optimization.
+
+While naive gradient descent would require traversing the whole training dataset
+to compute the gradients to perform a single gradient descent step, it is in
+practive sufficient to use only a small subset of samples from the training
+data. This modification of traditional gradient descent, which is known as
+stochastic (mini-batch) gradient descent allows neural network to scale
+efficiently to very large datasets. In addition to that, the stochasticity of
+the calculated gradients avoids the optimization process from getting stuck in
+local minima of the cost function.
+
+
+\section{Uncertainty in machine learning}
+
+
+Machine learning techniques allow us to train a model that retrieved physical
+quantities from satellite observations. However, as discussed in
+Sec.~\ref{sec:remote_sensing:retrieval_probem}, there is no unique solution to
+the retrieval problem. Mathematically, this means that any prediction consisting
+of just a single value will always be wrong. Given the impossibility of solving
+the retrieval problem exactly and import question becomes whether the model
+learn how wrong it is?
+
+The error that the model makes in its prediction it referred to as its
+predictive uncertainty. The total predictive uncertainty can be decomposed into
+three independent components. The first one, commonly referred to as epistemic
+uncertainty, is uncertainty caused by a lack of training data. Its defining
+property is that this uncertainty can be reduced by collecting more data to
+train the model. The second type is called aleatoric uncertainty. This
+uncertainty refers to the uncertainty that cannot be reduced by increasing the
+amount of data that the model is trained on. In the context of satellite
+observations this uncertainties is caused by the inability of the observations
+to fully determine the observed atmospheric state. It is thus a consequence of
+the ill-posed nature of the retrieval problem as discussed in
+Sec.~\ref{sec:remote_sensing:retrieval_problem}. The final type of uncertainties
+is caused by differences between the training data and the data that the model
+is actually applied on. It is obvious that when the wrong data is used to train
+the model it is likely to produce wrong results. However, subtle changes between
+training data and the actual data that the model is applied to are not uncommon
+and can thus increase the predictive uncertainty of the model.
+
+
+\section{Handling uncertainty}
+
+Next we turn to techniques to address uncertainty in neural networks predictions
+can be addressed. 
+
+\subsection{Probabilistic regression}
+
+Aleatoric uncertainty arises due to ambiguous samples in the training data.
+The fact that  these ambiguities are represented in the training data allows
+them to be learned by the neural network model. For this the deterministic
+formulation of regression, i.e. to predict a single value $y = f(x)$, is
+replaced by the probabilistic formulation to predicts the probability
+distribution $p(y|x)$ of $y$ given the input $x$.
+
+For this, the neural network model is typically trained to predict parameters of
+a parametrized form of the distribution $p(y|x)$ and the optimization criterion
+for the training is obtained by maximizing the likelihood of the training
+samples under the predicted distribution. Assuming $p(y|x)$ to be Gaussian
+distributed with mean $\mu = f(x)$ and constant standard deviation yields a
+training criterion equivalent to the MSE loss.
+
+This thesis explored two alternative approaches for probabilistic regression.
+The first one, quantile regression neural networks (QRNNs), predicts a sequence
+of quantiles of the distribution $p(y|x)$. Given a fraction $\tau \in [0, 1]$,
+the corresponding quantile $y_\tau$ is defined as
+\begin{align}
+  y_\tau &= F^{-1}(\tau)
+\end{align}
+where $F(y) = \int_{-\infty}^y p(y|x)\ dy$ the cumulative distribution
+function of $p(y|x)$. A neural network can be learn to predict a quantile
+$y_\tau$ by training it to minimize the quantile loss
+\begin{align}
+  \mathcal{L}(y, \hat{y}) &=
+  \begin{cases}
+    \tau  |y - \hat{y}| & \text{if } y > \hat{y} \\
+    (1 - \tau)  |y - \hat{y}| & \text{otherwise} \\
+    \end{cases}
+\end{align}
+This approach can be extended to multiple quantiles corresponding to
+a set of quantiles fractions $\mathrm{T} = \{\tau_1, \ldots, \tau_N\}$ by training
+the network to minimize the sum of the quantiles losses
+\begin{align}
+  \mathcal{L}_\mathrm{T}(y, \hat{y}) &= 
+  \sum_{\tau \in \mathrm{T}} \mathcal{L}_\tau(y, \hat{y})
+\end{align}
+
+The predicted quantiles can then be used to approximate the CDF of $p(y|x)$.
+Compared to the parametrized approach, this method is very flexible with respect
+to the shape of the distribution $p(y|x)$. This is often advantageous for the
+retrieval of cloud and precipitation as these typically can't take on negative
+values and vary of multiple orders of magnitude.
+
+The second approach stems from the work by \citep{sonderby20}. Here, the
+regression problem is cast as a classification problem by discretizing the
+domain of output values $y$ into bins $y_0, \ldots, y_n$ and then predicting for
+each bin the probability $p_i(Y >= y_{i - 1}, Y < y_i)$ of the observed $y$
+falling into the $i$th bin. Mathematically this is implemented by minimizing the
+categorical cross entropy loss
+\begin{align}
+  \mathcal{L}(y, \hat{y}) &=  -\log(\hat{y}_i) \text { with i s.t. } y_{i - } \leq y < y_i.
+\end{align}
+The predicted vector of bin probabilities can then be used as a piece-wise constant
+approximation of the PDF of $p(y, x)$.
+
+These two approach allow quantification of the aleatoric uncertainty. For these
+approaches it is important to keep in mind that the uncertainties are learned from
+the training data. The predicted uncertainties can therefore be expected to
+be meaningful if the data on which predictions are made has the same statistics
+as the training data. For inputs outside the training data, this approach will
+confidently predict a distribution $p(y, x)$, which, however, will likely
+be incorrect.
+
+An additional limitation of these approaches is their inability to represent
+correlations between multiple output variables. Since retrievals are typically
+performed on spatially correlated measurements, the uncertainties are also
+spatially correlated. The two approaches discussed above can quantify the
+uncertainty for each pixel independently but not their interactions for
+neighboring pixels.
+
+\subsection{Other approaches for quantifying uncertainties}
+
+\subsubsection{Bayesian neural networks}
+
+Bayesian neural networks (BNNs) can handle both epistemic and aleatoric
+uncertainty. For BNNs not only the target $y$ is assumed to be a random variable
+but also the parameters $\theta$ of the neural network model. The distribution
+of these parameters describes the uncertainty in the learned model parameters.
+The model prediction is the distribution $p(y|x, \theta)$ of the target $y$
+given and input $x$ and a realization of model parameters $\theta$. For inputs
+$x$ that the model has encountered often during training, the distribution of
+$\theta$ values will be such that $p(y|x, \theta)$ does not change much for
+different realization of $\theta$. For samples where this is not the case, there
+will be more spread in the predictions Generating predictions for multiple
+realization of network paremeter $\theta$ thus allows quantifying the epistemic
+uncertainty in the predictions in addition to the aleatoric uncertainty.
+
+Despite their ability to quantify both aleatoric and epistemic uncertainty, BNNs
+have not yet found widespread adoption for practical machine learning
+application mostly due to difficulties to train them. Recently, however,
+\citet{gal} proposed a technique that allows training DNNs without at similar
+costs as conventional DNNs.
+
+\subsubsection{Generative models}
+
+Another approach to quantify uncertainties in neural network predictions are
+generative methods. Instead of predicting the conditional probability
+distribution $p(y|x)$, these methods are trained to directly generate samples
+from the distribution. These methods have gained popularity in computer vision
+tasks due to their ability to generate samples from highly complex probability
+distributions such as images of faces or generic objects. The advantage of this
+approach is that it can handle spatial correlations in the uncertainties, which
+is not the case for the two other approaches discussed above.

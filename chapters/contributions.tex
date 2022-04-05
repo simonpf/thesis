@@ -1,0 +1,179 @@
+
+This chapter summarizes and discusses the research that is
+presented in the appended articles.
+
+\section{Handling retrieval uncertainty with neural networks}
+
+The first study that was conducted as part of this thesis is the work presented
+in \citet{pfreundschuh18} (Chap.~\ref{chap:qrnn}). It was motivated by the
+incompatibility of available Bayesian retrieval methods with neural network
+techniques. While the available Bayesian methods provided a principled way of
+handling the uncertainties inherent to retrievals of atmospheric properties,
+they were computationally expensive, which limited their applicability to
+certain retrieval quantities, particularly those related to clouds and
+precipitation. Retrievals based on neural networks often offered superior
+performance both in terms of computational cost as well as accuracy but
+typically neglected retrieval uncertainties.
+
+
+The main result from this study is empirical evidence of the equivalence of
+Bayesian retrieval methods and probabilistic neural network retrievals given
+that the training data follows the a priori distribution of the Baysian
+retrieval. The results are based on an idealized retrieval setup for which
+samples cloud by generated from the true posterior distribution using Markov
+Chain Monte Carlo (MCMC) sampling. For this case we were able to show that the
+results from a QRNN-based retrieval are consistent with the results obtained
+from MCMC. We furthermore found that the QRNN retrieval outperforms traditional
+Bayesian methods on smaller datasets indicating that they are affected less by
+the curse of dimensionality. Finally, we demonstrated the practicality of the
+approach on a cloud-top pressure retrieval from infrared measurements that was
+developed by EUMETSAT.
+
+\section{Passive microwave precipitation retrievals}
+
+The second study, presented in \citet{pfreundschuh22}
+(Chap.~\ref{chap:gprof_nn}), follows up the methodological development from
+\citet{pfreundschuh18} by applying the methodology to the retrieval of surface
+precipitation from the GPM constellation. The study presents two neural networks
+based implementations of the Goddard Profiling Algorithm (GPROF). The GPROF-NN
+1D algorithm employs a fully-connected neural network to retrieve from a single
+PMW observation. This version of the retrieval uses exactly the same input as
+the GPROF algorithm. GPROF-NN 3D, the second proposed retrieval, is based on a
+convolutional neural network and retrieves precipitation across the full swath
+of observations simultaneously. This allows the retrieval to leverage structural
+information in the observations, that is not available to the other retrievals.
+
+Both the GPROF-NN 1D and GPROF-NN 3D retrieval were developed to be functionally
+equivalent to the currently operational GPROF algorithm so that they can
+potentially replace it in an upcoming update. This required the development of a
+training pipeline that can be applied to all sensors of the GPM constellation.
+This proved challenging especially for the GPROF-NN 3D retrieval. The training
+data for all sensors of the GPM constellation is based on combined
+radar/radiometer observations from the GMI sensor. Since these observations are
+only available at a $\SI{100}{\kilo \meter}$-wide swath at the center of the GMI
+swath, a ways had to be found to extent these to the full GMI-swath and to remap
+them to the viewing geometries of the other sensors. The current approach uses
+an intermediate simulator network to extend the simulated observations to the
+full swath of GMI, which are then remapped to the viewing geometries of other
+sensors by interpolation. This solution should be a considered a heuristic that
+was pursued mainly because extending the simulations that are routinely performed
+for the generation of the GPROF training data would have been outside the
+scope of this study.
+
+The main results from this study are estimates of potential improvements in
+retrieval accuracy that can be realized by upgrading GPROF to either the
+GPROF-NN 1D or GPROF-NN 3D retrieval. To isolate the effect of the retrieval
+method from the actual training data, the retrieval accuracy was assessed using
+held-out scenes from the training data. We found that consistent improvements in
+a range of considered metrics and across all retrieval targets can potentially
+be achieved by replacing GPROF with the GPROF-NN 1D algorithm. The accuracy
+can be improved further by switching to the GPROF-NN 3D retrieval, which yields
+additional improvements similar in magnitude to those provided by the GPROF-NN 1D
+algorithm of the GPROF baseline retrieval. Moreover, we found that the effective
+resolution of the retrieval improves by at least $\SI{40}{\percent}$ with the
+neural network based retrieval. The study included results from two case studies
+of Hurricane overpasses from the GMI and MHS sensors, which provided limited
+evidence that the retrieval improvements can be expected to carry over to real
+observations.
+
+While the results from \citet{pfreundschuh22} were promising, their significance
+was limited due to the evaluation being mostly based on observations from the
+same distribution as the training data. Since for GMI the training data
+consisted of real observations, these results can be expected to carry over to
+operational application of the retrieval. For the other sensors, however, this
+is less evident because their training consists of simulated observations whose
+distribution deviates from that of real observations. In addition to this, the
+question remained open to what extent the retrieval results that are closer to
+the training data actually improve precipitation estimates compared to
+independent validation data.
+
+The study presented \citet{pfreundschuh22c} addresses these outstanding
+questions. To validate the newly developed implementation of GPROF, the results
+from the conventional and neural-network-based versions against ground-radar
+measurements over the continental united states (CONUS) and the tropical
+Pacific. The study was designed to provide a comprehensive assessment of the
+errors of the GPROF retrievals in order to determine the improvements afforded
+by neural-network based retrieval and to identify potential outstanding issues
+impeding their adaptation to operational processing.
+
+The validation against the ground based radar measurements largely confirmed the
+results from \citet{pfreundschuh22}. Both neural-network-based retrievals
+achieve significant improvements in retrieval accuracy compared to the
+conventional implementation. This is also the for the effective resolution of
+the retrievals, which are improved from $60$ to $\SI{20}{\kilo \meter}$ over
+land surfaces and from $20$ to $\SI{15}{\kilo \meter}$ over Ocean.
+
+\section{VIS/IR precipitation retrievals}
+
+While the neural-network-based implementation of GPROF provided clear evidence
+for the potential of neural-network based precipitation retrievals, the
+constraint of a retrieval that provides the same output as the currently
+operational GPROF algorithm limited the exploration of retrieval improvements to
+currently available retrieval outputs. The assessments presented in
+\citet{pfreundschuh22} and \citet{pfreundschuh22c} therefore focused mostly on
+deterministic precipitation estimates and thus did not explore the full
+potential of the probabilistic predictions afforded by the neural network.
+
+The aim of the study presented in \citet{pfreundschuh22b} was to explore the
+full potential of probabilistic neural-network based precipitation retrievals in
+the context of near real-time retrievals from VIS/IR observations over Brazil.
+The input data for the retrieval comes from the advanced baseline imager (ABI)
+on the geostationary operational environmental satellite (GOES) 16. To train the
+retrieval, the input observation were co-located with combined radar-radiometer
+measurements from the GPM core observatory satellite.
+
+To validate the retrieval its results were compared to 1 month of gauge
+measurements. The retrieval accuracy was assessed by comparing it to the
+retrieval that is currently used operationally at the Brazilian institute of
+space research (INPE) as well as to commonly used global precipitation
+retrievals. We were able to show that, despite the limited information content
+of VIS/IR observations, deep-learning-based retrievals outperform currently
+available methods, even those that merge IR observations from geostationary
+satellite with PMW observations polar-orbiting platforms.
+
+Furthermore, the study explored the potential of the probabilistic precipitation
+estimates. We were able to show that, after correcting for differences in the
+precipitation statistics of the training data and gauge measurements, confidence
+intervals derived from the probabilistic predictions were well calibrated
+against the gauge measurements. We also provided results that the probabilistic
+predictions improve the detection of strong precipitation.
+
+
+\section{Cloud correction for data assimilation}
+
+The final study included in this thesis explores another retrieval application.
+Motivated by an upcoming experimental satellite project, it addresses the
+question how neural networks can be used to remove the cloud contamination from
+microwave observations. This application is of interest as microwave
+observations are an important source of information for weather forecasts.
+However, the handling of observations that are affected by clouds is
+computationally difficult and therefore not performed at all centers that use
+these observations to generate forecasts.
+
+A simple approach to improve the utilization of the available microwave
+observations is to employ a correction scheme to remove the effect of the
+clouds on the observations so that they can be ingested in the same way as
+clear-sky observations. Since the correction effect cannot be
+perfect, the cloud correction leads to increased uncertainties in the
+corrected observations. Since the uncertainties assigned to observations play
+an important role for their correct assimilation, a cloud correction scheme
+should ideally be able to quantify the uncertainties in the corrected
+observations.
+
+In the study presented in \citet{kaur20}, we investigate the potential of QRNNs
+to correct cloud-contaminated microwave observations using different channels at
+different frequencies. The principal results from this study is that channels
+around $\SI{325}{\giga \hertz}$ are better suited for cloud correction than
+channels at $\SI{200}{\giga \hertz}$. In addition to that, the results show the
+ability of QRNNs to accurately correct the microwave observations and predict
+the associated uncertainties.
+
+
+
+
+\section{Limitations and future work}
+\begin{itemize}
+  \item Discuss limitations of proposed approaches
+  \item Discuss reamaining questions and new perspectives
+\end{itemize}
+
