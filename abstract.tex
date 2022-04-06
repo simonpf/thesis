@@ -10,3 +10,47 @@
   \vspace{0.9cm}
   \textbf{Abstract}
 \end{center}
+
+Clouds, rain and snow are essential components of the global hydrological cycle
+and the sole sustainable source of fresh water over land. They influence the
+climate by modulating and distributing incoming solar energy. Clouds are
+harbingers of storms, which may bring damaging amounts of precipitation leading
+to floods or landslides. Because of their importance for both climate and
+weather, significant scientific activity is devoted to improving the
+understanding of their physics and how they are represented in weather and
+climate models.
+
+Satellite observations play an important role in this because of their ability
+to provide global observations at regular time intervals. However, inferring
+properties of clouds or precipitation from satellite observations is a
+non-trivial task. Due to the limited information content of the observations and
+the complex physics of the atmosphere, such \textit{retrievals} are affected by
+considerable uncertainties. Traditional methods trade-off processing speed
+against accuracy and the ability to characterize the uncertainties in their
+predictions.
+
+This thesis proposes and evaluates methods to perform retrievals of hydrometeors
+(clouds and precipitation) with reliable uncertainty estimates using deep neural
+networks. The practicality and benefits of the approach is demonstrated using
+two real-world retrieval applications of precipitation. In both cases, we find
+that the application of deep neural networks considerably improves the accuracy
+of the retrieval over the traditional methods. In addition to that, the proposed
+approach provides reliable uncertainty estimates while still fulfilling latency
+requirements for real-time processing. In addition to that, show potential
+fitness of the method for cloud correction in numerical weather prediction.
+
+The principal advantage of the proposed approach is that it combines the
+expressive power of deep neural networks with the theoretically sound treatment
+of uncertainties of Bayesian retrieval methods, which are commonly used in the
+field. The approach affords considerable improvements in accuracy compared to
+traditional Bayesian methods due to the ability of the neural networks to 
+scale to large datasets. For retrievals that are already based on neural
+networks, it provides a simple and efficient way to quantify the dominant source
+of uncertainty in the retrieval. The approach therefore has the potential to
+improve a wide range of retrieval applications in addition to those presented
+in this thesis.
+
+
+
+
+
