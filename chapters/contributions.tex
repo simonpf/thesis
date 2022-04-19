@@ -1,21 +1,26 @@
 
-The previous chapter introduced the computational approaches, which were
-explored in the studies presented in this thesis. This chapter summarizes
-the papers and discusses the main findings regarding the applications of
-QRNNs and DRNNs in remote sensing and related applications.
+The previous chapter introduced QRNNs and DRNNs as machine-learning based
+methods to perform remote sensing retrievals. The motivation for this was to
+find a practical approach to combine the expressiveness of modern, deep neural
+networks with the theoretically sound handling of uncertainties of conventional
+inverse-theory-based retrieval methods. To explore the validity and
+practicality of the proposed methods we have tested them using idealized
+scenarios and developed multiple real-world retrieval applications. This section
+presents this work and summarizes the main results.
 
 \section{Handling retrieval uncertainty with neural networks}
 
-\citet{pfreundschuh18} (Chap.~\ref{chap:qrnn}) proposed the use of quantile
-regression with deep neural networks for remote sensing retrievals. The
-motivation for this study were the shortcomings of currently available methods
-for retrievals of hydrometeors. While the Bayesian framework provides a
-principled way of handling the retrieval uncertainties (see
-Sec.~\ref{sec:machine_learning:retrieval_problem}), these methods are
-computationally complex and limited to retrievals from single input pixels.
-Retrievals based on neural networks often offered superior performance both in
-terms of computational cost as well as accuracy but typically neglected
-retrieval uncertainties.
+The first of the append papers, titled 'A neural network approach to estimating
+a posteriori distributions of Bayesian retrieval problems' and published in
+\citet{pfreundschuh18},} proposes the use of QRNNs for remote sensing
+retrievals. The motivation for this study were the shortcomings the retrieval
+methods that were available at the time of its writing. While the Bayesian
+framework provides a principled way of handling the retrieval uncertainties
+(see Sec.~\ref{sec:machine_learning:retrieval_problem}), these methods are
+computationally complex and cannot easily be extended to include information
+from neighboring pixels in the retrieval. While retrievals based on neural
+networks were already common and often offered superior performance both in
+terms of computational cost as well as accuracy,they neglected retrieval uncertainties.
 
 Two experiments were performed in the study. The first one used an idealized
 retrieval scenario in which samples from the posterior distribution $p(y|x)$
@@ -95,7 +100,7 @@ Both the GPROF-NN 1D and GPROF-NN 3D retrieval were developed to be functionally
 equivalent to the currently operational GPROF algorithm so that they can
 potentially replace it in an upcoming update. Moreover, the implementations were
 restricted to use exactly the same data for the training as the current method
-to ensure a just comparison of the retrievals. This required the development of
+to ensure a fair comparison of the three retrievals. This required the development of
 a training pipeline that can be applied to all sensors of the GPM constellation.
 This proved challenging especially for the GPROF-NN 3D retrieval. The training
 data for all sensors of the GPM constellation is based on combined
