@@ -1,54 +1,19 @@
 
-The previous chapter discussed atmospheric radiative transfer and the observable
-signals that result from the presence hydrometeors in the atmosphere. Technical
-limitations make that observation frequencies for hydrometeors cannot be chosen
-freely, but typically constitute a trade-off between feasibility, cost and
-scientific value. This chapter provides an overview of the available observations.
-Based on this it will be discussed how these observations can be related to
-physical properties of the atmosphere using the theory of inverse problems.
+The interactions of hydrometeors with electromagnetic radiation, which were
+discussed in the previous chapter, provide the signal that can be measured
+by earth observing satellites. This chapter now turns to the practical
+aspects of the remote sensing of hydrometeors, namely how these signals
+can be obtained and how they can be related into physical estimates.
 
-\section{Sensor types}
+\section{Satellite observations}
 
-In addition to \texit{passive} sensors, which sense reflected solar radiation or
-thermal radiation emitted from the Earth or its atmosphere, there exist sensors
-that themselves emit radiation and measure the amount of it that is scattered
-back to the sensor. By measuring the time of travel between emission and
-reflection, these \textit{active} sensors measure the distance from the detector
-in addition to the intensity of the reflected radiation this allows them to
-profile the atmosphere along the line of sight, which leads to much higher
-vertical resolutions than what can be achieved with atmospheric sounding.
 
-While active sensors can provide unrivaled vertical resolution, their swath
-width and thus horizontal coverage is typically limited. An additional
-disadvantage of active sensors is that the strength of the scattering back to
-the sensor is only indirectly related to the mass of the observed precipitation,
-which causes uncertainties in the retrievals.
 
-Passive sensors allow much larger swath sizes to be realized and thus provide
-much higher spatial coverage. Furthermore, these sensors require less energy and
-are cheaper than their passive counterparts. There are therefore more of them
-available and they typically also provide better spectral coverage.
+\subsection{Synergies}
 
 \section{Satellite platforms}
 
-In addition to the sensor type, the satellite platform upon which the sensor is
-placed plays an important role in determining the characteristics of the
-resulting observations. Visible and infrared sensors is that they can produce
-spatially highly resolved images of the Earth and its atmosphere. This allows
-them to be deployed employed on geostationary satellite platforms. Geostationary
-satellite orbit the Earth at an altitude of around $\SI{35\ 000}{\kilo \meter}$
-at the same angular velocity as the Earth, which allows them to hover over the
-same position of the Earth surface. In this way they can provide continuous
-observations of large parts of the Earth surface that lie below the sensor.
-
-Microwave observations require very large antennas to achieve high resolutions.
-Since the antenna sizes that can be realized in space are limited, microwave
-sensors are currently restricted to low earth orbits with altitudes between 500
-and $\SI{1000}{\kilo \meter}$. Their field of view is variable and typically has
-an extent of 1000 to $\SI{2000}{\kilo \meter}$ across the ground track of the
-satellite. Depending on the exact size of the field of view, the time between
-consecutive overpasses for a fixed position on Earth may be as high as
-$\SI{12}{\hour}.
+\section{Satellite observations}
 
 
 \section{Observation frequencies}
@@ -70,64 +35,3 @@ largest particles in the cloud, which are typically so large that they are
 precipitating in the form of rain, snow, graupel or hail.
 
 
-\section{From observations to measurements}
-\label{sec:remote_sensing:retrieval_problem}
-
-So far, the discussion of how satellite observations can inform us about the
-state of the atmosphere was only qualitative. The question that remains to be
-answered is how these satellite observations can be used to derive
-\texit{quantitative} estimates of physical properties of the atmosphere. What
-makes this difficult is that this problem typically does not allow a unique
-solution. The reason for this is that the information from the satellite
-observations is insufficient to fully determine the state in the atmosphere and
-that these observations are affected by measurement errors.
-
-Such problems can be addressed with the mathematical framework of
-\textit{inverse problem theory}. Here the underlying assumption is that we are
-observing a system, whose state is described by the vector $\mathbf{x} \in
-\mathrm{R}^n$. The observations $\mathbf{y} \in \mathrm{R}^M$ are generated
-through physical processes that can be described through a forward model
-function $f: \mathrm{R}^n \rightarrow \mathrm{R}^m$ and may be affected by a
-random error $\mathbf{\epsilon} \in \mathrm{R}^M$:
-\begin{align}\label{eq:inverse_problem}
-  \mathbf{y} &= f(\mathbf{x}) + \mathbf{\epsilon}
-\end{align}
-
-Inferring hydrometeor properties from satellites observations thus amounts to
-finding the vector $\mathbf{x}$ that satisfies Eq.~\ref{eq:inverse_problem}. The
-problem is that an exact solution to this problem does not exist. Because of the
-random noise $\mathbf{\epsilon}$, the equation is never strictly satisfied.
-Furthermore, observations $\mathbf{y}$ of clouds are often ambiguous in the
-sense that a physically different hydrometeor configuration, for example a cloud
-with more and smaller particles, produces similar observations to another one.
-
-Although an exact solution to the problem is not possible, using Bayesian
-statistics we can still make use of the observations in $\mathbf{y}$. In the
-Bayesian framework, both the observations $\mathbf{y}$ and the atmospheric state
-vector $\mathbf{x}$ are assumed to be random variables. Furthermore it is
-assumed that $\mathbf{x}$ is distributed according to a known \textit{a priori}
-distribution $p(\mathbf{x})$. Instead of a single state $\mathbf{x}$, the
-solution of the problem then becomes the posterior distribution
-$p(\mathbf{x} | \mathbf{y})$ of the atmospheric state. According to Bayes theorem,
-this solution is given by:
-\begin{align}\label{eq:bayes}
-  p(\mathbf{x} | \mathbf{y}) &= \frac{p(\mathbf{y}|\mathbf{x}) p(\mathbf{x})}{p(\mathbf{y})}
-\end{aling}
-
-Equation \label{eq:bayes} can be solved in two different ways:
-\begin{itemize}
-  \time In the case that we have access to matching pairs $(\mathbf{x}, \matbf{y})$ of
-  observations and atmospheric states, we try to infer the conditional probability
-  $p(\mathbf{x} | \mathbf{y}$ directly from data. This the approach that is the focus of
-  this thesis.
-  \item Alternatively, if we can construct a computational model of the probability
-  $p(\mathbf{y} | \mathbf{x})$, the right-hand side of Eq.~\ref{eq:bayes} can be used to
-  calculate or approximate the posterior distribution.
-\end{itemize}
-
-Both of these approaches are commonly used in remote sensing. The disadvantage
-of the former is that it requires a dataset with observations and corresponding
-atmospheric states, which are not always simple to come by. The difficulty with
-the latter approach is typically the calculation of the probability
-$p(\mathbf{y}|\mathbf{x})$, which requires solving the radiative transfer
-equation to simulate the observations.

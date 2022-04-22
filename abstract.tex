@@ -10,3 +10,54 @@
   \vspace{0.9cm}
   \textbf{Abstract}
 \end{center}
+
+Satellite observations of clouds and precipitation are a crucial source of
+information in science, meteorology as well as an increasing range of societal
+and economical activities. This importance is due to their role in the
+hydrological cycle as well as the weather and climate of the Earth. Patterns of
+cloudiness and precipitation are highly variable in both space and time and
+exhibit interactions across continental scales. Their study therefore requires
+observations with global coverage and high temporal resolution, which currently
+can only be provided by satellite observations.
+
+ However, inferring properties of clouds or precipitation from satellite
+observations is a non-trivial task. Due to the limited information content of
+the observations and the complex physics of the atmosphere,
+such \textit{retrievals} are affected by considerable uncertainties. Traditional
+methods trade-off processing speed against accuracy and the ability to
+characterize the uncertainties in their predictions.
+
+This thesis develops and evaluates methods to perform retrievals of
+hydrometeors, i.e. clouds and precipitation, with reliable uncertainty estimates
+using deep neural networks. The practicality and benefits of the approach are
+demonstrated using three real-world retrieval applications of cloud top pressure
+and precipitation. Because of the demonstrated benefits in these application,
+one is already in operational use at the European Organisation for the
+Exploitation of Meteorological Satellites, while the two others are planned to
+be used for operational processing for the Global Precipitation Measurement, a
+joint mission by NASA and the Japanese Aerospace Exploration Agency, and the
+Brazilian National Institute for Space Research, respectively.
+
+%The proposed methods are limited to the quantification of the irreducible
+%uncertainty of the retrieval and thus based on the assumption that sufficiently
+%large and realistic training data is available. Evaluation of the probabilistic
+%retrievals against independent measurements indicates that this is a valid
+%approximation for remote sensing retrievals. Although the methods cannot
+%represent correlations between output variables, we show that the predicted
+%retrieval uncertainties improve the characterization of the observed quantities,
+%which should benefit downstream applications.
+
+The principal advantage of the proposed methods is their simplicity and
+computational efficiency. They only require a minor modification to architecture
+and training of conventional neural networks but capture the dominant source of
+uncertainty for remote sensing retrievals. For retrievals based on conventional
+Bayesian retrieval algorithms, the methods provide equivalent probabilistic
+estimates while unlocking superior accuracy and processing speed afforded by
+neural networks. As demonstrated by the examples presented in this thesis, the
+proposed methods provides a highly effective way to improve a wide range of
+remote sensing applications.
+\vfill
+{\textbf{Keywords:} Remote sensing, machine learning, precipitation}
+
+
+

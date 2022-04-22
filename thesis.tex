@@ -47,6 +47,11 @@
 
 \setlength{\headsep}{25pt}
 
+\newcommand{\note}[1]{\textcolor{orange}{NOTE: #1}}
+
+\renewcommand{\vec}[1]{\bm{#1}}
+\newcommand{\mat}[1]{\bm{#1}}
+
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -71,13 +76,10 @@
 \chapter{Introduction}
 \input{chapters/introduction}
 
-\chapter{Atmospheric radiative transfer}
+\chapter{Satellite remote sensing of clouds and precipitation}
 \input{chapters/radiative_transfer_theory}
 
-\chapter{Satellite remote sensing of clouds and precipitation}
-\input{chapters/remote_sensing}
-
-\chapter{Machine learning}
+\chapter{Machine learning for remote sensing retrievals}
 \input{chapters/machine_learning}
 
 \chapter{Contributions}

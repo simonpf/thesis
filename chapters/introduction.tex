@@ -6,21 +6,23 @@ predictions as well as the monitoring of the Earth's climate are of considerable
 societal and economical value; a value that is likely to increase as the Earth's
 climate warms.
 
-The observations made by Earth observing satellite consist of measurements of
+The observations made by Earth-observing satellites consist of measurements of
 electromagnetic radiation, which is either reflected or emitted from the Earth
-and its atmosphere. An example of such signals is given in
-Fig.~\ref{fig:introduction:water_vapor}. The image shows infrared radiation
-emitted from a low pressure system over the Mediterranean. The measured signal
-in this example is the intensity of the radiation, represented from intense to
-weak by the bright to dark coloring. At this specific frequency, the measured
-radiation stems from water vapor and clouds in the atmosphere. Dry air, which
-contains less water vapor, appears less opaque at the observing frequency. The
-radiation emitted from dry air thus stems from lower down in the atmosphere
-where temperatures are higher making the emitted radiation more intense. The
-colors corresponding to intense radiation are thus indicative of dry air.
-Moderate intensities correspond to moist air, while the lowest intensities stem
-from high clouds that emit radiation at altitudes at which no significant
-amounts of water vapor are present.
+and its atmosphere. An example of such measurements is given in
+Fig.~\ref{fig:introduction:water_vapor}. Besides demonstrating the delicate
+beauty of the Earth and its atmosphere, this image can inform a trained eye
+about their physical state. The image shows infrared radiation emitted from a
+low pressure system over the Mediterranean sea. The measured signal in this
+example is the intensity of the radiation, represented from intense to weak by
+the bright to dark coloring. At this specific wavelength, the measured radiation
+stems from water vapor and clouds in the atmosphere. Dry air, which contains
+less water vapor, appears less opaque at this frequency. The more intense
+radiation thus stems from lower down in the atmosphere where temperatures are
+higher thus marking regions of relatively dry air. Moist air, which is more
+opaque, emits radiation from higher up in the atmosphere where temperatures are
+lower and thus produces the moderate intensities in the image. The lowest
+intensities stem from high clouds which, due to their opacity, emit radiation at
+very high altitudes and cold atmospheric temperatures.
 
 \begin{figure}[h!]
 \centering
@@ -31,64 +33,69 @@ Imager at a wavelength of $\SI{6.2}{\micro \meter}$.}
 \label{fig:introduction:water_vapor}
 \end{figure}
 
-As this example illustrates, knowledge of how the radiation observed by a
-satellite is created allows an observer to infer moisture content and the
-presence of high clouds from the satellite observations. Or, formulated more
-generally: An atmospheric constituent that interacts sufficiently strongly with
-this radiation, will create a signal that can be observed by the satellite. By
-inverting the interaction of the atmosphere with the observed radiation, the
-satellite observations can be used to estimate its properties. This
-inversion, \textit{the retrieval}, relates satellite observations to physical
-properties and thus informs the observer about the state of the atmosphere.
+This example illustrates that an understanding of the processes generating the
+infrared radiation observed by a satellite, allows an observer to infer moisture
+content as well as the presence of high clouds in the atmosphere. Formulated
+more generally: If a component of the atmosphere interacts sufficiently strongly
+with radiation, it generates an electromagnetic signal that can be measured
+using a suitable sensor. By inverting the component's interaction with the
+observed radiation, these measurements can be used to infer some of its
+properties. This inversion process is called \textit{the retrieval} and is
+required to relate satellite observations to the physical state of the
+atmosphere.
 
-The subject of this thesis are computational methods to measure the properties
-of clouds and precipitation using satellite observations. As will be explained
-in more detail later on, these measurements are difficult, firstly, due to the
-high variability in the appearance and composition of clouds and, secondly, due
-to the complexity of their interaction with radiation. At the same time, such
-measurements are highly relevant due to the important role that clouds and
-precipitation play in the weather and climate system.
+The subject of this thesis are computational methods for retrieved properties of
+clouds and precipitation from satellite observations. As will be explained in
+more detail later on, these measurements are difficult, firstly, due to the high
+variability in the appearance and composition of clouds and, secondly, due to
+the complexity of their interaction with radiation. At the same time, the
+important role that clouds and precipitation play in the weather and climate
+system makes these measurements are highly relevant for science and society.
 
 To set the scene for the discussion of satellite observations and retrieval
 techniques in the subsequent chapters, this introduction aims to provide an
-overview of the relevance of satellite observations of clouds and precipitation.
-Beginning with the societal significance of water, the discussion will move on
-to the scientific relevance observing water as it moves through the atmosphere.
+overview of the relevance of observing and measuring clouds and precipitation
+from space. Beginning with the societal significance of water, the discussion
+will move on to the scientific relevance of observing water as it moves through
+the atmosphere.
 
 \section{Water as resource}
 
 Water is essential to life on Earth. It is the bloodstream of the biosphere
 \citep{falkenmark04} and a fundamental resource to all forms of human
-societies. It is common to categorize human water consumption into two types:
-Blue water consumption refers to the consumption of fresh water taken from lakes,
-rivers or ground water storage. The largest part of blue water consumption is
-used to irrigate crops, while domestic and industrial use play minor roles. Blue
-water consumption is distinguished from green water consumption, which refers to
-the part of  precipitation over land that is released back to the atmosphere
-through evaporation or transpiration. While often neglected, green water plays
-an important role in providing water for rain-fed agriculture, which accounts
-$60$ to $\SI{70}{\percent}$ of the global food production, and in sustaining
+societies. The largest part of human freshwater consumption from lakes, rivers
+or ground water, so called \textit{blue water} consumption, is used to irrigate
+crops, while domestic and industrial use play minor roles. Blue water
+consumption is distinguished from green water consumption, which refers to the
+part of precipitation over land which is involved in the photosynthesis process.
+Although rarely considered in consumption inventories, green water plays an
+important role in providing water for rain-fed agriculture, which accounts $60$
+to $\SI{70}{\percent}$ of the global food production, and in sustaining
 terrestrial ecosystems \citep{falkenmark04}.
 
-Humans depend on water for food production both through irrigation from blue
-water flows as well as the provision of soil moisture by green water flows.
+Humans thus depend on water for food production both through irrigation from
+blue water flows as well as the provision of soil moisture by green water flows.
 Achieving food security has been recognized by the United Nations (UN) as a
 sustainable development goal (SDG, \citeauthor{sdg}, \citeyear{sdg}). The large
 contribution of food production to overall water consumption poses a challenge
 to the management of water resources. Diverting more blue or green water flows
 to the production of food reduces the amount of water that is available to
-sustain terrestrial and aquatic ecosystems. There is thus potential for conflict
-between the SDG to end hunger and the SDGs sustain terrestrial and aquatic
-ecosystems \citep{falkenmark04}. Measurements of precipitation are a key
-ingredient in the monitoring and modeling of water resources, which are required
-to avoid and minimize conflicts between these competing functions of water.
+sustain terrestrial and aquatic ecosystems. There is thus direct potential for
+conflict between the SDGs to end hunger and the SDGs to sustain terrestrial and
+aquatic ecosystems (13 and 14).
 
-An additional challenge for ensuring food security is the inter-annual
-variability of water availability. It is particularly large in the arid and
-semi-arid regions of the world \citep{falkenmark04}, where droughts are a
-recurring feature of the climate. Also here satellite observations that allow
-the monitoring of water resource are an important tool for the effective
-management of droughts \citep{boyd13}.
+At the same time, water requirements for the production of energy are projected
+to increase as fossil fuels are increasingly sourced from unconventional
+deposits, such as shale oil and gas, whose extraction consumes substantial
+amounts of water \citep{rosa18}. This is accompanied by a projected increase in
+hydropower \citep{zarfl15} and the use of biofuels, both of which are reliant
+on freshwater supplies. This emerging competition in water uses is recognized as
+the \textit{food-energy-water} nexus \citep{dodorico18}.
+
+
+% Also here satellite observations that allow
+%the monitoring of water resource are an important tool for the effective
+%management of droughts \citep{boyd13}.
 
 %Water consumption is typically categorized into two classes: blue and
 %green water consumption. Blue water consumption refers to 
@@ -110,22 +117,23 @@ management of droughts \citep{boyd13}.
 
 \section{The hydrological cycle}
 
-Sustainable human water consumption is dependent on the replenishment of the
-sources from which that water is obtained. Fresh water over land exists in the
-form of glaciers, ice sheets, lakes and reservoirs, snow pack, wetlands and
-rivers as well as a small part contained in the biomass. Water also exists
-within the land surface in the form of soil moisture, permafrost and ground
-water. The largest of the water that is available on the surface of the Earth is
-stored in the oceans. Only a very small part is contained in the atmosphere - to
-largest extent in the form of water vapor but also as clouds in the form of
-liquid or frozen droplets \citep{abbott19}.
+Sustainable human water consumption depends on the replenishment of the sources
+from which the water is obtained. Fresh water over land exists in the form of
+glaciers, ice sheets, lakes and reservoirs, snow pack, wetlands and rivers as
+well as a small part contained in the biomass. Water also exists within the land
+surface in the form of soil moisture, permafrost and ground water. The largest
+part of the water that is available on the surface of the Earth is stored in the
+oceans. Compared to that, the part of water that is stored in the atmosphere is
+very small. Most of that is in the form of water vapor while minor fractions are
+contained in clouds as either liquid droplets or frozen ice
+crystals \citep{abbott19}.
 
 Despite containing only a tiny fraction of the global water reserves at any
-given moment, the atmosphere is responsible for essentially all of the transport
-of water from oceans to land, where it replenishes the water storages from which
-it is available direct (blue) or indirect (green) consumption. The system of
-fluxes between the different forms in which water exists on the surface of the
-Earth is called  the hydrological cycle.
+given moment, the atmosphere is responsible for essentially all of the water
+transport from oceans to land, where it replenishes the water storages from
+which it is available for direct (blue) or indirect (green) consumption. The
+system of fluxes between the different forms in which water exists on the
+surface of the Earth is called the hydrological cycle.
 
 The illustration in
 \ref{fig:introduction:water_cycle} provides an overview of the principal fluxes
@@ -137,12 +145,25 @@ where it may precipitate to replenish land-based freshwater reserves. A part of
 that precipitation evaporates again allowing it to take part in the formation of
 precipitation further inland.
 
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{water_cycle}
+\caption{
+Illustration of the global hydrological cycle. Water evaporates over the
+Oceans and parts of it are transported to the land, where it fills up continental
+water storages or re-evaporates.}
+\label{fig:introduction:water_cycle}
+\end{figure}
+
 On the scale of river basins, the inflow of water through the atmosphere is the
-only sustainable source of fresh water \citep{falkenmark04}. Successful
-monitoring of water resources is thus reliant upon the quantification of this
-part of hydrological cycle. Since these fluxes occur across continental and
-global scales, the currently only efficient way of measuring them is with the
-help of satellite observations
+only sustainable source of fresh water \citep{falkenmark04}. Given the competing
+water requirements for the production of food, energy, the access to clean water
+and the sustaining of ecosystems discussed above, it is clear that water
+management is required to minimize conflicts and avoid human suffering. The
+management of water resources in turn requires the monitoring and modeling of
+the hydrological cycle. Since the fluxes of water in the atmosphere occur across
+continental scales, the only currently available way of measuring them is with
+the help of satellite observations.
 
 \section{Weather and climate}
 
@@ -156,17 +177,17 @@ land slides.
 The ability to predict the weather has considerable value for society,
 especially for high impact events involving extreme wind speeds or
 precipitation. The availability of satellite observations has played an
-important role in the steady improvement of weather forecast that took place
+important role in the steady improvement of weather forecast that occurred
 during the last three decades
 \citep{bauer15}. Weather forecasting  systems use satellite data to
 determine a best estimate of the current state of the atmosphere, which is then
-evolved into the future to make a prediction. While most advanced forecasting
+evolved into the future to predict the weather. While most advanced forecasting
 systems ingest satellite observations directly and are thus not dependent on
-retrievals \citep{bauer10}, their use for improving model initialization for
-short-range forecasts still being investigated
-\citep{dehaan14, benjamin21}. Moreover, retrievals of precipitation and
-cloud properties are l used by weather forecasters to gain situational awareness
-and assess potential hazards such as flooding or mud slides.
+satellite retrievals \citep{bauer10}, their use for improving model
+initialization for short-range forecasts is still being investigated
+\citep{dehaan14, benjamin21}. Besides that, retrievals of precipitation and
+cloud properties are used by weather forecasters to gain situational awareness
+and assess potential weather hazards.
 
 %Despite the progress of the last decades, weather forecasts still struggle to
 %produce accurate forecasts for specific meteorological contexts
@@ -177,127 +198,117 @@ and assess potential hazards such as flooding or mud slides.
 %in the model, which is where satellite-derived measurements of precipitation and
 %clouds can help researchers better understand them.
 
-Water is also an important actor in the climate system. Its primary effect is on
-the Earth's energy budget. Water vapor is the most potent greenhouse gas and
-thus contributes strongly to the retention of radiative energy emitted from the
-Earth's surface. In the form of clouds, water both cools the Earth system
+Water is also an important actor in the climate system. It affects the Earth's
+energy budget in multiple ways. Water vapor is the most potent greenhouse gas
+and thus contributes strongly to the retention of radiative energy emitted from
+the Earth's surface. In the form of clouds, water both cools the Earth system
 through the reflection of solar radiation and warms it through the absorption of
 upwelling longwave radiation. Although the global effect of clouds is a
-pronounced cooling, this effect varies regionally and with the properties of the
-clouds.
+pronounced cooling, the effect varies regionally and with the properties of the
+clouds. Evaporation and transpiration are important for the transfer of heat
+from the Earth's surface to the atmosphere. Since, on average, these two processes
+have to be balanced by precipitation, the energy budget of the Earth is directly
+linked to precipitation \citep{trenberth09}.
 
-Through its interactions with solar and IR radiation, water modulates
-the incoming and outgoing energy fluxes of the atmosphere. In addition to that,
-water plays an important role for energy fluxes within the climate system
-through the uptake and release of latent heat. Transpiration and evaporation
-account for a significant part of the heat released by the Earth's surface to
-the troposphere, which shapes its thermodynamic structure. Latent heat also
-plays an important role in the horizontal heat transport from the equator
-to the poles \citep{stevens13}.
-
-Instead a passive tracer of atmospheric dynamics the hydrological cycle must be
-considered and activate component of the both the weather and climate system.
-Scientists therefore rely on various observations of the hydrological cycle to
-improve understanding of the climate system.
+Instead of a passive tracer of atmospheric dynamics, the hydrological cycle must
+thus be considered an active component of the both the weather and the climate
+system. Both climate science and meteorology therefore rely on satellite observations
+of the hydrological cycle to improve their understanding of the Earth system.
 
 
-\section{A hotter planet}
+\section{A warmer planet}
 
-The scientific evidence that the Earth system is heating up is
-unambiguous \citep{ipcc21}. As the Earth system adapts to the increased
-radiative forcing from greenhouse gases, its climate changes. These changes are
-not uniform but vary across spatial scales and regions. To help societies adapt
-to these changes, reliable regional predictions required. However, climate model
-predictions at these scales remain tainted by uncertainties.
+As a consequence of anthropogenic emissions of carbon dioxide, the Earth's
+ climate is heating up. As the Earth system adapts to the increased radiative
+ forcing from greenhouse gases, its climate changes. These changes are not
+ uniform but vary regionally and across spatial scales. Reliably regional
+ predictions of climate change are required to help societies adapt to the
+ changing climate. However, our current understanding as well us our ability to
+ predict changes at regional scales remains severely limited.
 
 Together with the climate, also the hydrological cycle is changing: Increased
-evaporation leads to more frequent droughts at the same time as total
-precipitation in other regions is increasing. Extreme precipitation events are
-strengthening and becoming more frequent. As for the climate, predicting changes
-in the hydrological cycle is compounded by their regional and scale dependence.
-At the scales of individual precipitation systems, precipitation increases
-because of the higher capacity of warmer air to carry water vapor. However,
-global evaporation is constrained to a smaller rate of change, which leads to a
-coincident reduction of rain occurrence. These small scale changes are modulated
-by changes in the general circulation, which defines the global distribution of
-precipitation. Furthermore, these changes are masked by significant temporal
-variability, which complicates their detection in observational data and
-increases the uncertainty of short-term predictions.
+evaporation leads to more frequent droughts at the same time as global
+precipitation is expected to increase. Extreme precipitation events are
+strengthening and becoming more frequent. The prediction of changes in the
+hydrological cycle is complicated by their regional and scale dependence. At the
+scales of individual precipitation systems, precipitation increases with the
+capacity of warmer air to carry water vapor. Globally, however,
+evapotranspiration and thus also precipitation are constrained by the Earth's
+energy budget, which limits increases in global precipitation to a lower rate
+than that of individual storms\citep{collins13}. These contrasting changes are
+in turn modulated by changes in the general circulation, which ultimately
+defines the global distribution of precipitation. Moreover, the detection and
+prediction of these changes is difficult because on short time scales it likely
+to be masked by the internal variability of precipitation.
 
-Contributing to the difficulty of predicting the climate is that, as the climate
-adapts to the radiative forcing caused by the increased greenhouse effect, the
-resulting changes may act to increase or decrease the initial forcing.
-These \textit{feedback mechanisms} determine the extent of the global warming
-that will occur as a consequence of increased concentrations of carbon dioxide in the
-atmosphere.
-
-One of the important feedbacks is due to clouds. By reflecting incoming
-short-wave radiation and the absorption of outgoing long-wave radiation, clouds
-exert a strong influence on the Earth's energy budget. The net radiative
-forcing by clouds is the sum of these two opposing effects. However their
-strengths depends on the properties of the cloud such as their height
-and composition as well as their location. Uncertainties in cloud
-feedbacks remain the primary source of uncertainty in predictions of
-the climate response to CO$_2$ emission.
+As part of the hydrological cycle, clouds will change with the climate. Since
+cloud reflect incoming solar radiation and the absorb outgoing long-wave
+radiation, these changes act as a feed back on the Earth's energy budget and
+will thus influence the response of the climate system to increased CO$_2$
+concentrations. Whether an individual cloud exerts a net warming or cooling
+effect on the climate system depends on its properties such as altitude and
+composition as well as its location. The representation of clouds remains an
+important challenge for climate models and uncertainties in cloud feedbacks
+remain the primary source of uncertainty in predictions of the climate response
+to increased CO$_2$ concentrations in the atmosphere \citep{zelinka20}.
 
 Our understanding of climate change has progressed immensely during the last
 decade but remains insufficient to make confident predictions at regional
-scales. Such predictions are necessary for efficient climate change adaptation
-and thus minimize human suffering. Given the complexity of the climate system,
-advancing climate science is a multi-disciplinary challenge. Observations form
-the basis of our understanding of the climate system. They are required to
-improve and validate climate models as well as the identification of changes
-in the climate system.
+scales. Such predictions are necessary for efficient climate change adaptation.
+Satellite observations are therefore essential for improving and validating
+climate models as well as the monitoring of changes in the climate system.
 
 
 \section{Why satellites?}
 
 Considering the importance of rain for a large range of human activities, it is
-not surprising that humans have relied on observations in order to improve their
-understanding of the weather system. The most direct and arguably intuitive way
-to measure precipitation is through the use of \textit{rain gauges}. A rain
-gauge consists of a cavity that captures rain and from which the accumulated
-precipitation can be measured. First records of gauge measurements of rain date
-back to as long as 400 years BC \citep{strangeways2000}. Today, dense gauge
-measurements are available from all continents, however their density varies
-from country to country and is oftentimes tied to the local population density.
+not surprising that humans have been measuring precipitation and trying to
+improve their understanding of the weather system. The most direct and arguably
+intuitive way to measure precipitation is through the use of \textit{rain
+gauges}. A rain gauge consists of a cavity, which captures rain and from which
+the accumulated precipitation can be measured. First records of gauge
+measurements of rain date back to as long as 400 years
+BC \citep{strangeways2000}. Today, gauge measurements are available from all
+continents, however their density varies from country to country and is
+oftentimes tied to the local population density.
 
-The main disadvantage of rain gauges are the highly localized character of the
-measurements, which limits their ability  to accurately capture the
-spatial structure of precipitation on short time scales. Moreover, because
-these measurements are performed by a large number of public and private
-actors across the globe, not all of them are easily accessible for
-scientists. Thus, only $\SI{1}{\percent}$ of the surface of the Earth is
-estimated to be within a distance of $\SI{5}{\kiolo \meter}$ from the nearest
-gauge measurement \citep{kidd17}.
-by accessibility issues as well as their accessibility, which is hampered by
+The main disadvantage of rain gauges is the highly localized character of their
+measurements, which limits their ability to accurately capture the spatial
+structure of precipitation on short time scales. Moreover, because these
+measurements are performed by a large number of public and private actors across
+the globe, not all of them are easily accessible for scientists. Effectively,
+only $\SI{1}{\percent}$ of the surface of the Earth is estimated to be within a
+distance of $\SI{5}{\kilo \meter}$ from the nearest gauge
+measurement \citep{kidd17}.
 
 Over land, another important technique for measuring precipitation are
 ground-based radars. These radars send out beams of radiation, which are
-reflected by rain and snow. By measuring the amount of radiation that is
-reflected back to the radar, precipitation within a radius several hundreds of
-kilometers can be detected. Over land, ground-based radars play an important
+reflected by rain and snow. Precipitation within a radius several hundreds of
+kilometers form the radar can be detected by measuring the amount of radiation
+reflected back to the radar. Over land, ground-based radars play an important
 role for real-time monitoring of precipitation. However, due to their high
 installation and maintenance costs, their spatial availability is irregular and
 typically tied to the local population density. In addition to that, the
-availability and accuracy of radar measurements may by complex terrain as well
-as the distance from the from the radar location, which limits the usefulness of
-these observations for climatological purposes.
+availability and accuracy of radar measurements may be hampered by complex
+terrain as well as the distance from the radar location, which limits the
+usefulness of these observations for climatological applications.
 
 The relevance of clouds and precipitation for the hydrological cycle has been
 known since before the times of Aristotle \citep{frisinger72}. Nonetheless, the
 systematic study of clouds has long remained a secondary focus of modern
-meteorology and it took until the 1970s until the importance of interactions
+meteorology and it took until the 1970s before the importance of interactions
 between clouds, weather and climate put them at the forefront of atmospheric and
-climate research \citep{stephens02}. Traditionally, cloud observations were
+climate research \citep{stephens03}. Traditionally, cloud observations were
 conducted as parts of routine meteorological observations performed on land and
 ships \citep{hughes84}. However, these observations were mostly qualitative in
 nature indicating only the presence of clouds, a cloud class and their rough
-height. 
+height.
 
 The principal drawback of all of the measurement techniques discussed above is
-their limited and irregular spatial coverage. This severely limits the
-usefulness of the data for the monitoring of weather and climate. Observations
-from satellites ideally complement surface based measurements as they can be
-used to fill in the gaps between ground-based measurements.
+their limited and irregular spatial coverage. This limits their value for the
+monitoring of weather and climate. Satellites have the ability to provide
+observations across global scales at high temporal resolutions. Because of this
+they ideally complement ground based measurements and have become an essential
+source of information for a wide range of scientific, economic and societal
+activities.
 
