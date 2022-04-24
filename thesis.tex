@@ -3,6 +3,8 @@
 %%% Graphics
 \usepackage{graphicx}
 \graphicspath{{images/}}
+\usepackage{caption}
+\usepackage{subcaption}
 %%% Page geometry
 \usepackage[a4paper,width=150mm,top=25mm,bottom=30mm,bindingoffset=6mm]{geometry}
 \usepackage{setspace}
@@ -24,6 +26,9 @@
 \usepackage{pdfpages}
 %%% Bibentries
 \usepackage{bibentry}
+%%% Don't break lists
+\usepackage{enumitem}
+\usepackage{parskip}% http://ctan.org/pkg/parskip
 
 % Appearance
 %\usepackage{sectsty}
@@ -31,8 +36,8 @@
 %\allsectionsfont{\sffamily}
 %\allchaptersfont{\sffamily}
 
-\title{Improving satellite measurements of clouds and precipitation using machine learning}
-\author{Simon M. Pfreundschuh}
+\title{Improving satellite measurements of clouds and precipitation using \mbox{machine} learning}
+\author{Simon Pfreundschuh}
 \date{\today}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -52,6 +57,21 @@
 \renewcommand{\vec}[1]{\bm{#1}}
 \newcommand{\mat}[1]{\bm{#1}}
 
+\newcommand{\ttlpage}[0]{
+  \vspace{1.0cm}
+  \begin{center}
+    \includegraphics[width=\textwidth]{title_page}
+  \end{center}
+  \vspace{3cm}
+ \vfill
+}
+
+%\newcommand{\ttlpage}{
+% \vfill
+% \vspace{5cm}
+%}
+
+
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -65,6 +85,7 @@
 \input{publications}
 \tableofcontents
 \clearpage
+\input{acknowledgements}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Kappa
@@ -93,30 +114,37 @@
 \renewcommand{\chaptername}{Paper}
 \setcounter{chapter}{0}
 
-\chapter{A neural network approach to estimating a posteriori distributions of Bayesian retrieval problems} 
-\chaptermark{Neural networks for Bayesian retrieval problems}            % Short title for the page header
-\label{chap:qrnn}
-\thispagestyle{empty}
-\cleardoublepage            % skip back side of the page
-\includepdf[pages=-]{papers/amt-11-4627-2018}
-
-\chapter{GPROF-NN: A neural network based implementation of the Goddard Profiling Algorithm} 
-\chaptermark{GPROF-NN}
-\label{chap:qrnn}
-\thispagestyle{empty}       % no page numbers
-\cleardoublepage            % skip back side of the page
-\includepdf[pages=-]{papers/gprof_nn_manuscript}
-
-\chapter{An improved near-real time precipitation retrieval for Brazil} 
-\chaptermark{Near-real time precipitation retrieval for Brazil}
-\thispagestyle{empty}       % no page numbers
-\cleardoublepage            % skip back side of the page
-\includepdf[pages=-]{papers/manuscript}
-
-\chapter{Can machine learning correct microwave humidity radiances for the influence of clouds?} 
-\chaptermark{Correcting microwave humidity radiances for the influence of clouds}
-\thispagestyle{empty}       % no page numbers
-\cleardoublepage            % skip back side of the page
-\includepdf[pages=-]{papers/amt-14-2957-2021}
+%\chapter{A neural network approach to estimating a posteriori distributions of Bayesian retrieval problems} 
+%\chaptermark{Neural networks for Bayesian retrieval problems}            % Short title for the page header
+%\label{chap:qrnn}
+%\thispagestyle{empty}
+%\cleardoublepage            % skip back side of the page
+%\includepdf[pages=-]{papers/amt-11-4627-2018}
+%
+%\chapter{GPROF-NN: A neural network based implementation of the Goddard Profiling Algorithm} 
+%\chaptermark{GPROF-NN}
+%\label{chap:qrnn}
+%\thispagestyle{empty}       % no page numbers
+%\cleardoublepage            % skip back side of the page
+%\includepdf[pages=-]{papers/gprof_nn_manuscript}
+%
+%\chapter{Evolution of the GPROF passive microwave precipitation retrievals evaluated against ground radar measurements over the continental US and the Pacific Ocean} 
+%\chaptermark{GPROF: Evolution and validation}
+%\label{chap:qrnn}
+%\thispagestyle{empty}       % no page numbers
+%\cleardoublepage            % skip back side of the page
+%\includepdf[pages=-]{papers/gprof_validation}
+%
+%\chapter{An improved near-real time precipitation retrieval for Brazil} 
+%\chaptermark{Near-real time precipitation retrieval for Brazil}
+%\thispagestyle{empty}       % no page numbers
+%\cleardoublepage            % skip back side of the page
+%\includepdf[pages=-]{papers/manuscript}
+%
+%\chapter{Can machine learning correct microwave humidity radiances for the influence of clouds?} 
+%\chaptermark{Correcting microwave humidity radiances for the influence of clouds}
+%\thispagestyle{empty}       % no page numbers
+%\cleardoublepage            % skip back side of the page
+%\includepdf[pages=-]{papers/amt-14-2957-2021}
 
 \end{document}
