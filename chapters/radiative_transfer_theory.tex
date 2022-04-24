@@ -1,30 +1,25 @@
 
 The remote sensing of any atmospheric component is based on its interaction with
 electromagnetic radiation. By inverting this interaction, the measured radiation
-can be used to infer certain properties of that component. This chapter presents
-the physical processes, which enable satellites to sense clouds and
-precipitation as well as the practical aspects of observing the
-atmosphere from space.
+can be used to infer certain properties of this component. This chapter presents
+the physical processes underlying these interactions as well as relevant
+practical aspects of observing the atmosphere from space.
 
-
-The first part of this chapter provides a brief introduction to
-radiative transfer (RT) theory, which can be used to describe  the
-interaction of radiation with the atmosphere. Based on this, the
-principal characteristics of observations across the electromagnetic
-spectrum and their sensitivity to hydrometeors%
-\footnote{%
-Hydrometeor is the collective term for the liquid and frozen particles that
-that make up clouds and precipitation.
-}%
- are discussed. The remaining part of this chapter then provides an overview of
- the types of satellite observations that were used in the retrieval
- applications that were developed as part of this thesis.
-The presentation focuses on observations measuring radiation that is
-emitted from the sun or the Earth and its atmosphere, so called
+The first part of this chapter provides a brief introduction to radiative
+transfer (RT) theory, which can be used to describe the interaction of radiation
+with the atmosphere. Based on this, the principal characteristics of
+observations across the electromagnetic spectrum and their sensitivity to
+hydrometeors%
+%
+\footnote{ Hydrometeor is the collective term for the liquid and frozen particles that make
+up clouds and precipitation.}%
+%
+are discussed. The focus is put on observations that measure radiation emitted
+from the sun or the Earth and its atmosphere, so called
 \textit{passive observations}.
-%to the electromagnetic radiation measured by satellites. This is
-%followed by a discussion of the different types of satellite observations
-%relevant to this thesis and their characteristics.
+The remaining part of this chapter then provides an overview of the types of
+different satellite observations that were used in the retrieval applications
+developed in this thesis.
 
 
 %Doing so, requires a quantitative model of the propagation of radiation through
@@ -39,12 +34,12 @@ emitted from the sun or the Earth and its atmosphere, so called
 \section{Radiative transfer theory}
 
 Radiative transfer theory describes the propagation of a perfectly monochromatic
-beam of light through a medium. As this beam propagates through the medium it
-interacts with it through electromagnetic and quantum mechanical processes.
-Radiative transfer theory provides a simplified model of these interactions,
-which is well suited for the conditions of passive remote sensing of the
-atmosphere.  The following presentation is  based on the more
-comprehensive texts by \citet{mishenko02}, \citet{thomas02} and \citet{wallace06}.
+beam of light through a medium. As the beam propagates it interacts with the
+medium through electromagnetic and quantum mechanical processes. Radiative
+transfer theory provides a simplified model of these interactions, which is well
+suited for the conditions of passive remote sensing of the atmosphere. The
+following presentation is based on the more comprehensive texts
+by \citet{mischenko02}, \citet{thomas02} and \citet{wallace06}.
 %al. (2002), Thomas and Stamnes (2002), and Wallace and Hobbs (2006).
 
 Electromagnetic sensors measure the mean total energy that is transferred by
@@ -60,13 +55,14 @@ beam can be described using the four dimensional Stokes vector
     V \\
     \end{array} \right ]
 \end{align}
-The components $I, Q, U$ and $V$ are called the Stokes parameters and have the
+The components $I$, $Q$, $U$ and $V$ are called the Stokes parameters and have the
 unit of monochromatic energy flux per solid angle. The Stokes vector fully
 describes the state of a monochromatic beam of radiation to the extent that it
-can be measured by an electromagnetic sensor. Thus any electromagnetic
-measurement can be derived from knowledge of the Stokes vector at the position
+can be measured by an electromagnetic sensor. Any electromagnetic
+measurement can thus be derived from knowledge of the Stokes vector at the position
 and orientation of the sensor. Radiative transfer theory describes how the
-Stokes vector changes as it propagates through a medium.
+Stokes vector changes as it propagates through a medium and thus allows
+the modeling of satellite observations of the atmosphere.
 
 \subsection{Interactions with matter}
 
@@ -77,30 +73,37 @@ electromagnetic radiation, its absorption and scattering.
 \subsubsection{Emission}
 
 At temperatures above absolute zero, all matter emits thermal radiation. Thermal
-radiation is produced when matter transitions from a quantum mechanical state
+radiation is produced when molecules transition from a quantum mechanical state
 of higher energy to one of lower energy causing the excess energy to be emitted
-in the form of radiation. The amount of radiation of a given frequency $\nu$
-emitted by a body depends on its temperature and material. It is typically
-modeled using a material-dependent emissivity vector $\vec{e}$, which relates
-the emission of the material to that of an ideal black body, i. e. a material
-that absorbs all incoming radiation:
+in the form of radiation. The amount of radiation that a body emits varies with
+its material properties and temperature as well as the wavelength $\lambda$ of
+the radiation.
+
+In radiative transfer theory, emission from arbitrary matter is modeled using a
+material-dependent emissivity vector $\vec{e}$, which relates the emission of
+the material to that of a black body. A black body is an idealized body that
+absorbs all incoming radiation. The intensity of the radiation emitted by a
+black body at temperature $T$ and wavelength $\lambda$ is given by Planck's law
+\begin{align}
+B(T, \lambda) &= \frac{2 h c^2}{\lambda ^ 5}\frac{1}{e^{\frac{hc}{\lambda k_B T}} - 1},
+\end{align} with $c$ is the speed of light in vacuum, $h$ the Planck
+constant and $k$ the Boltzmann constant.
+
+The emissivity vector $\vec{e}$ describes the amount of radiation that is
+emitted along an infinitesimal step $ds$ along the propagation path of a beam: 
  \begin{align}
    \label{eq:emissivity}
-   \vec{I} &= (\vec{e} \cdot ds) B(T, \nu)
+   \vec{I}_\text{emitted} &= \vec{e} \cdot B(T, \nu)\ ds.
  \end{align}
- Here $B(T, \nu)$ is the radiation emitted by a black body at temperature $T$
- and frequency $\nu$, which is described by Planck's law
- \begin{align}
-   B(T, \nu) &= \frac{2 \nu^2}{c^2}\frac{h\nu}{e^{\frac{h\nu}{k T}} - 1},
- \end{align}
- with $c$ is the speed of light in vacuum, $h$  the Planck constant and $k$
- the Boltzmann constant.
+ Eq.~\ref{eq:emissivity} provides a deceptively simple way to calculate the
+ radiation emitted by arbitrary materials. It is clear that this formulation
+ delegates much of the complexity of calculating the radiation emitted from a
+ material to the calculation of the emissivity vector $\vec{e}$. In the
+ atmosphere, $\vec{e}$ depends on the concentrations of gases, aerosols and
+ hydrometeors as well as the local temperature and pressure. A significant part
+ of the difficulty of calculating thermal emission from the atmosphere arises
+ from determining its emissivity.
 
- The emissivity is a material property of the medium through which the beam
- propagates and depends on its quantum mechanical properties as well as the
- wavelength of the radiation. The emissivity vector defined above is a
- differential quantity that describes emission from a volume element along an
- infinitesimal step of the propagation path of the beam.
 
 
 %For a material that is opaque, there is no need to integrate over the full
@@ -115,15 +118,15 @@ that absorbs all incoming radiation:
 Absorption refers to the process of radiation being converted into internal
 energy of the matter it interacts with. Mathematically, this process is
 described by the absorption vector $\vec{\alpha}$, defined as the fraction of
-the incoming radiation that is absorbed along an infinitesimal distance $ds$
-along the propagation path:
+the beam's radiation that is absorbed along an infinitesimal step of length $ds$
+along its propagation path:
 \begin{align}
-\vec{I}_\text{absorbed} &= (\vec{\alpha} \cdot\ ds) \odot \vec{I}
+\vec{I}_\text{absorbed} &= \vec{\alpha} \odot \vec{I} \ ds
 \end{align}
 Here $\odot$ denotes the element-wise product of the absorption vector and
 the Stokes vector $\vec{I}$ of the incoming radiation. Absorption may be
 understood as the inverse process of thermal emission. Formally, this is
-expressed by Kirhoff's  law of radiation
+expressed by Kirchoff's  law of radiation
 \begin{align}
   \vec{\alpha} &= \vec{\epsilon},
 \end{align}
@@ -140,7 +143,7 @@ troposphere.
 
 \subsubsection{Scattering}
 
-Scattering describes the effect that inhomogeneities of the medium have on the
+Scattering describes the effect of inhomogeneities in the medium on the
 propagation of the beam. When a plane-parallel electromagnetic wave encounters
 such inhomogeneities, it is scattered in all directions. Mathematically, the
 scattering of a beam of light propagating in direction $\vec{n}$ into the
@@ -149,12 +152,12 @@ $\mat{Z}(\vec{\hat{n}}, \vec{n})$:
 \begin{align}
   \vec{I}_\text{scattered}(\vec{\hat{n}}) &= \mat{Z}(\vec{\hat{n}}, \vec{n}) \vec{I}(\vec{n})
 \end{align}
-Since parts of the energy flux of the beam are deviated from the direction of
-propagation, the intensity of the radiation along the beam is decreased. As it
-propagates through the medium, the intensity of a beam is thus decreased by the
-effects of absorption and scattering. The combination of these two processes is
-referred to as \textit{attenuation} or \textit{extinction} and is described by
-the attenuation matrix $\mat{K}$, which is the sum of the absorption vector
+Since parts of the energy transported by the beam are deviated from its
+propagation path, its intensity is decreased. As it propagates through the
+medium, the intensity of a beam is thus decreased by the effects of absorption
+and scattering. The combination of these two processes is referred to
+as \textit{attenuation} or \textit{extinction} and is described by the
+attenuation matrix $\mat{K}$, which is the sum of the absorption vector
 $\vec{\alpha}$ and the fraction of radiation scattered away from the propagation
 path:
 \newcommand*{\vertbar}{\rule[-1ex]{0.5pt}{2.5ex}}
@@ -170,26 +173,32 @@ path:
 \end{align}
 
 The strength of the scattering interaction depends on the relation of the size
-of the inhomogeneities and the wavelength of the radiation. When the scale of
+of the inhomogeneities to the wavelength of the radiation. When the scale of the
 inhomogeneities is much smaller than the wavelength, the effects of scattering
-can often be neglected. As the size of the inhomogeneities increases, the
-strengths of the scattering increases and scattering effects must be taken into
-account. The scattering interaction drastically complicates calculating the
-evolution of the radiation because it requires taking into account the radiation
-that is scattered into the line of sight from all directions. Because of their
-relatively large size, scattering effects of hydrometeors need to be taken into
-account across most of the electromagnetic spectrum. Simulations of radiative
-transfer that involve hydrometeors are therefore more complex to perform than
-those that don't.
+can often be neglected. As the relative size of the inhomogeneities increases,
+the strength of the scattering increases and its effects must be taken into
+account. The scattering interaction drastically complicates the modeling of the
+radiative transfer because it requires taking into account the radiation that is
+scattered into the line of sight from all directions. Further difficulty arises
+from the dependency of the scattering properties on the shape of the
+inhomogeneities, which makes it difficult to calculate the scattering
+and absorption properties of scattering materials with irregular shapes.
+
+Because of their relatively large size, scattering effects from hydrometeors
+need to be taken into account across most of the electromagnetic spectrum.
+Frozen hydrometeors also exhibit highly variable shapes, which makes the
+calculation of their scattering properties uncertain and highly complex. These
+factors make the modeling satellite observations of hydrometeors a scientific
+and computational challenge.
 
 
 \subsection{The radiative transfer equation}
 
 The previous section introduced the fundamental interactions of radiation
-with matter and how they are described mathematically in radiative transfer
+with matter and how they are described mathematically by radiative transfer
 theory. Combining the three processes of emission, absorption and scattering,
 the change that a beam undergoes as it travels a distance $ds$ along its
-propagation path through the atmosphere is described the vector radiative
+propagation path through the atmosphere is described by the vector radiative
 transfer equation (VRTE):
 \begin{align}\label{eq:vrte}
   \frac{d\vec{I}(\vec{n})}{ds} &=
@@ -203,15 +212,21 @@ along the line of sight. The second term represents emission along the line of
 propagation, with the emissivity vector $\bm{\epsilon}$ replaced by the
 absorption vector $\bm{a}$ according to Kirchoff's law of thermal radiation.
 The third term represents the radiation that is scattered into the line of
-sight. Both of these terms act to increase the intensity of the beam. 
+sight. Both of these terms act to increase the intensity of the radiation
+in the beam. 
 
 \section{Observations of hydrometeors}
 %
-\begin{figure}[!tbp]
+\begin{figure}[!tbh]
   \centering
-  \includegraphics[width=0.75\textwidth]{spectrum}
-  \caption{Overview of the electromagnetic spectrum used for hydrometeor retrievals. The black
-    curve shows the variation of the atmospheric opacity across the spectrum.}
+  \includegraphics[width=1.0\textwidth]{spectrum_complete_no_cb}
+  \caption{Overview of the electromagnetic spectrum used for hydrometeor
+    retrievals. The black curve in the top panel shows the variation of the
+    atmospheric opacity across the spectrum. Principal classes of hydrometeors
+    are drawn at the wavelength corresponding to their representative size.
+    Liquid hydrometeors are drawn in blue, while frozen hydrometeors in gray.
+    The four lower panels show example observations of hurricane Ida from at
+    different wavelengths.}
   \label{fig:radiative_transfer:spectrum}
 \end{figure}
 
@@ -219,105 +234,132 @@ Radiative transfer theory describes the propagation of radiation through the
 atmosphere in terms of its radiative properties, which are represented by the
 absorption vector $\vec{\alpha}$, the extinction matrix $\vec{K}$ and the phase
 matrix $\vec{Z}$. In order to apply radiative transfer theory to gain an
-understanding of remote sensing observations of the atmosphere, the gases,
-aerosols and hydrometeors contained in it must be related to its radiative
-properties.
+understanding of remote sensing observations of the atmosphere, its composition
+must be related to its radiative properties.
 
 The radiative properties of the atmosphere are strongly dependent on the
-wavelength $\lambda$ at which it is observed. The applications presented in this
-thesis focus on observations from the visible (VIS,
-$\SI{350}{\nano \meter} \leq \lambda < \SI{720}{\nano \meter}$), infrared (IR,
-$\SI{0.72}{\micro \meter} \leq \lambda < \SI{20}{\micro \meter}$), and microwave
-(MW, $\SI{1}{\milli \meter} \leq \lambda < \SI{1}{\meter}$) regions, which
-encompass most commonly used wavelength for the remote sensing of clouds and
-precipitation.
-
-An overview these regions within spectrum of electromagnetic radiation is
-provided in Fig.~\ref{fig:radiative_transfer:spectrum}. The graph provides an
-approximate depiction of the atmospheric opacity in the absence of hydrometeors.
-When viewed from a satellite, the atmospheric opacity gives an indication of how
-far down into the atmosphere a sensor can 'see'. Generally, where the opacity is
-low, the satellite can see down to the surface, while where it is high it is
-sensitive only to the upper parts of the atmosphere.
+wavelength $\lambda$ at which it is observed. The applications presented
+in this thesis make use of observations from the visible to the microwave
+region of the electromagnetic spectrum. To gain an understanding of the principal
+properties of these observations, it is practical distinguish the following
+four different wavelength domains:
+\begin{description}[midpenalty=100000]
+\item[Visible (VIS):] $\SI{350}{\nano \meter} \leq \lambda < \SI{720}{\nano \meter}$
+\item[Near infrared (NIR):] $\SI{720}{\nano \meter} \leq \lambda < \SI{2.5}{\micro \meter}$
+\item[Thermal infrared (TIR):] $\SI{2.5}{\nano \meter} \leq \lambda < \SI{20.0}{\micro \meter}$
+\item[Microwave (MW):] $\SI{1}{\milli \meter} \leq \lambda < \SI{1}{ \meter}$
+\end{description}
+An overview of these regions within the spectrum of electromagnetic radiation is
+provided in Fig.~\ref{fig:radiative_transfer:spectrum}. The top panel shows a
+simplified graph of the variation of opacity of a cloud-free atmosphere, which
+is defined as the fraction by which the intensity of a beam is reduced as it
+propagates from the bottom to the top of the atmosphere. When viewed from a
+satellite, the atmospheric opacity gives an indication of how far down into the
+atmosphere a sensor can `see'. Generally, the satellite can see down to the
+surface where the opacity is low, while it is sensitive only to the upper parts
+of the atmosphere where it is high. Fig.~\ref{fig:radiative_transfer:spectrum}
+also contains four examples observations of hurricane Ida from across the
+electromagnetic spectrum, which will be used in the following to illustrate
+the principal characteristics of the corresponding observations.
 
 Observations of the atmosphere are the results of the combined effects of gases,
-aerosols and hydrometeors in the atmosphere. To gain an understanding of the
-information that certain observations provide on hydrometeors, it is helpful to
-decompose the contributions into a clear-sky component, which takes into account
-only the effects of molecules aerosols, and a cloudy-sky component, which takes
-into account the effects of hydrometeors. As a first approximation, the clear-sky
+aerosols and hydrometeors. To gain an understanding of the information that
+certain observations provide on hydrometeors, it is helpful to decompose the
+contributions into a clear-sky component, which takes into account only the
+effects of molecules and aerosols, and a cloudy-sky component, which takes into
+account the effects of hydrometeors. As a first approximation, the clear-sky
 component maybe viewed as the background upon which the hydrometeors are
 observed.
 
 \subsection{The atmospheric background}
 
 Observations at short wavelengths differ from those at long wavelengths with
-respect the source of the observed radiation. At wavelengths in the visible and
-near infrared regions, the largest part of the observed radiation stems from the
-sun. This is because, at these short wavelengths, black body radiation at
-typical atmospheric temperatures is small compared to reflection of solar
-radiation. As the wavelength increases, the intensity of solar radiation decreases
-while that of a black bodies at atmospheric temperatures increases. At wavelengths
-exceeding $\approx \SI{3}{\micro \meter}$, emission from atmospheric constituents
+respect to the origin of the observed radiation. In the VIS and NIR regions, the
+largest part of the observed radiation stems from the sun. This is because, at
+these short wavelengths, black body radiation at typical atmospheric
+temperatures is small compared to reflection of solar radiation. As the
+wavelength increases, the intensity of solar radiation decreases while that of a
+black body at atmospheric temperatures increases. At wavelengths exceeding
+approximately $\SI{2.5}{\micro \meter}$, emission from atmospheric constituents
 dominates the intensity of reflected solar radiation. This threshold separates
-the thermal ($\lambda \geq \SI{3}{\micro \meter}$) from the near infrared. At
-these wavelengths solar emission can generally be neglected and all observed
-radiation originates from the atmosphere itself or the Earth's surface.
+the thermal from the near infrared. At these wavelengths solar emission can
+generally be neglected and all observed radiation originates from the atmosphere
+itself or the Earth's surface.
 
-The atmospheric opacity displayed in Fig.~\ref{fig:radiative_transfer:spectrum}
-corresponds to the combined effects of absorption and extinction by gases in the
-atmosphere. Gases affect radiation mostly through absorption and emission, while
-scattering plays a role only in the visible range. The reason for this is the
-small size of the molecules (around $\SI{1}{\nano \meter}$) compared to the
-wavelengths of the radiation.
+The atmospheric opacity displayed in the top panel of
+Fig.~\ref{fig:radiative_transfer:spectrum} corresponds to the combined effects
+of absorption and extinction by gases in the atmosphere. Gases affect radiation
+mostly through absorption and emission, while scattering plays a role only in
+the visible range. The reason for this is the small size of the molecules
+compared to the wavelengths of the radiation.
 
-There is little absorption in the visible range with most of it due to water
-vapor. In the near and thermal infrared, absorption increases but is concentrated
-in discrete absorption bands, which makes the opacity of atmosphere highly
-variable across wavelengths. The principal gaseous absorbers in the infrared
-region are water vapor, cabon dioxide and ozone. Absorption also plays an
-important role in the microwave region with significant contributions from water
-vapor, oxygen, nitrogen and ozone. 
+There is little absorption and molecular scattering in the visible range, which
+makes the atmosphere transparent to the human eye. Satellite observations
+therefore see down to the surface of the Earth where it isn't covered by clouds
+(see panel (a) of Fig.~\ref{fig:radiative_transfer:spectrum}). In the near and
+thermal infrared, absorption increases but is concentrated in discrete
+absorption bands, which makes the opacity of atmosphere highly variable across
+wavelengths. The principal gaseous absorbers in the infrared region are water
+vapor, carbon dioxide and ozone. The banded structure of the atmospheric opacity
+gives rise to so-called \textit{window channels}, which are channels in which
+the atmospheric opacity is low. An example of such a window channel is given in
+panel (b) of Fig.~\ref{fig:radiative_transfer:spectrum}. Because of the low
+opacity in this channel, the radiation observed in the cloud-free regions of the
+image corresponds to thermal radiation from the Earth's surface, which is
+intense because of the relatively high temperatures and the high emissivity of
+the land and ocean surfaces.
 
-In addition to the effects of gases, satellite observations can be affected by
-the presence of aerosols. Aerosols are larger than gas molecules but their
-scattering and absorption effects remain mostly limited to the VIS and NIR
-regions. At longer wavelength, aerosols have no significant effect on the
-observations.
+Molecular absorption also plays an important role in the microwave region
+\footnote{For microwave applications it is common
+practice to refer to wavelengths in frequency units. We will follow this
+convention here but give the corresponding wavelength in parentheses.}
+with significant contributions from water vapor, oxygen, nitrogen and ozone. At
+the short-wavelength end of the region, the atmosphere is relatively opaque
+because of absorption from water vapor. The observations show in panel (c) of
+Fig.~\ref{fig:radiative_transfer:spectrum} are located close to a strong water
+vapor absorption line at $\SI{183}{\giga \hertz}$
+($\lambda \approx \SI{1.6}{\milli \meter}$). Because the atomsphere is fully
+opaque at this wavelength, the observed thermal radiation from water vapor stems from
+higher up in the atmosphere than at channels with lower opacity. This causes the
+lower intensities observed in the cloud-free regions of the observations. At the
+long-wavelength end of the microwave region, the opacity of the atmosphere is
+low and the observations are again sensitive to the surface. As can be seen in panel
+(d) of Fig.~\ref{fig:radiative_transfer:spectrum}, there is very strong contrast
+between land and ocean surfaces. This is because of the different radiative
+properties of land and water surfaces at these wavelengths and the angle
+at which the observations are performed.
 
 \subsection{Physical and radiative properties of hydrometeors}
 
 The radiative properties of hydrometeors depend on their size and whether they
 are in the liquid or frozen phase. Because the dielectric properties of ice and
 water differ significantly across the electromagnetic spectrum, hydrometeors of
-similar sizes have drastically different radiative properties in certain
-wavelength domains. To provide an overview of the sizes of the principal classes
-of hydrometeors with respect to the wavelengths of the electromagnetic spectrum,
-they are displayed in Fig.~\ref{fig:radiative_transfer:spectrum} at the
-wavelengths corresponding to their approximate sizes. Liquid hydrometeors are
-identified using blue coloring, while white corresponds to frozen hydrometeors.
+similar sizes may have drastically different radiative properties at certain
+wavelength. To provide an overview of the sizes of the principal classes of
+hydrometeors with respect to the observation wavelength, they are displayed in
+Fig.~\ref{fig:radiative_transfer:spectrum} at the wavelengths corresponding to
+their approximate sizes. Liquid hydrometeors are identified using blue coloring,
+while white corresponds to frozen hydrometeors.
 
 Among the smallest hydrometeors are liquid cloud droplets with typical sizes
 around $\SI{5}{\micro \meter}$. At sizes of around $\SI{25}{\micro \meter}$,
 water drops become large enough to fall out of the clouds. Small, precipitating
-liquid droplets that range in size from $25 to \SI{250}{\micro \meter}$ are
-referred to as drizzle. Larger drops are classified as rain. Typical sizes of
-rain drops are around $\SI{1}{\milli \meter}$ but can become as large as
+liquid droplets that range in size from $25$ to $\SI{250}{\micro \meter}$ are
+referred to as drizzle. Larger drops are classified as rain, whose typical
+size is around $\SI{1}{\milli \meter}$ but can become as large as
 $\SI{5}{\milli \meter}$.
 
 At temperatures below $\SI{0}{\celsius}$ ice crystals can form in the
 atmosphere. Their sizes range from $\SI{1}{\micro \meter}$ to
 $\SI{1.5}{\milli \meter}$ with typical sizes around $\SI{100}{\micro \meter}$.
 Snow flakes are aggregates, which form through the collision of ice crystals.
-These range in size from hundreds of micrometers millimeters to several
-centimeters.
-
-When snowflakes collide with liquid drops at temperatures below
-$\SI{0}{\celsius}$, the liquid drop freezes upon the snowflake causing it to
-grow. This process is called riming. Heavily rimed snowflakes are referred to as
-graupel and have typical sizes of around $\SI{1}{\centi \meter}$. Finally, the
-largest hydrometeors are hailstones, which form only in strong thunderstorms and
-can reach sizes of up to $\SI{10}{\centi \meter}$$.
+These range in size from hundreds of micrometers to several centimeters. When
+snowflakes collide with liquid drops at temperatures below $\SI{0}{\celsius}$,
+the liquid drop freezes upon the snowflake causing it to grow. This process is
+called riming. Heavily rimed snowflakes are referred to as graupel and have
+typical sizes of around $\SI{1}{\centi \meter}$. Finally, the largest
+hydrometeors are hailstones, which form only in strong thunderstorms and but can
+reach sizes of up to $\SI{10}{\centi \meter}$$.
 
 
 %Most observations of clouds are affected not only by the clouds themselves but
@@ -365,48 +407,51 @@ to be taken into account across most wavelengths from the VIS to the MW regions.
 In the VIS and NIR there is little absorption from either water or ice.
 Hydrometeors thus mostly deviate radiation from its propagation path without
 significantly decreasing its intensity. Clouds observed at these wavelengths
-typically appear bright because the solar radiation scattered back towards
+typically appear bright because the solar radiation  scattered back towards
 the sensor is much more intense than reflection from the surface.
 
 In the FIR region, both water and ice are strongly absorbing. Because the
-ambient temperature decreases with altitude in the troposphere, opaque clouds
-emit less intense radiation than the surface or water vapor below them.
-At wavelength at which there is weak absorption from water vapor, so called
-\textit{window channels}, radiation from opaque clouds can be used to
-infer the temperature at the cloud top, which is related to the altitude of
-the cloud.
+ambient temperature decreases with altitude in the troposphere, the intensity of
+the radiation that is emitted by a cloud is related to its altitude. The effect
+of this is clearly visible in panel (b) of
+Fig.~\ref{fig:radiative_transfer:spectrum}. The clouds which appear uniformly
+white in the natural color composite exhibit  more structure in the
+observations at $\lambda=\SI{10.3}{\micro \meter}$. The lowest intensities are
+observed close to the center of the hurricane where the clouds extend highest
+into the atmosphere.
 
-At microwave frequencies, liquid water is a much more efficient absorber than
-ice. Furthermore, for passive observations the scattering from hydrometeors at
-frequencies below $\SI{50}{\giga \hertz}$ can be neglected. The principal
-interaction with hydrometeors at these wavelength is therefore thermal emission
-and absorption from liquid cloud droplets and precipitation. Since water
-surfaces have low emissivities at these wavelengths, emission from liquid
-hydrometeors causes a distinct signal in the observations.
+In the microwave region, absorption from ice is generally much weaker than that
+from liquid water. Frozen hydrometeors therefore interact with radiation
+primarily through scattering. However, due to the relatively large wavelengths
+of microwave observations, significant scattering effects are limited to snow,
+hail and graupel and frequencies above $\SI{50}{\giga \hertz}$
+($\lambda \approx \SI{6}{\milli \meter}$) . Because they are only sensitive to
+large hydrometeors, only clouds that produce snow are visible in the
+observations at $\SI{183}{\giga \hertz}$
+($\lambda \approx \SI{1.6}{\milli \meter}$).
 
-At frequencies above $\SI{50}{\giga \hertz}$, passive microwave observations
-become sensitive to the scattering from large snow flakes. This scattering
-signal is important for sensing precipitation over land, where the emission
-signature from liquid hydrometeors may not be detectable due to the much warmer
-background surface.
+For passive observations the scattering from hydrometeors at frequencies below
+$\SI{50}{\giga \hertz}$ can be neglected. The principal interaction with
+hydrometeors is therefore thermal emission and absorption from liquid cloud
+droplets and precipitation. Since water surfaces have low emissivities at these
+wavelengths, emission from liquid hydrometeors causes a distinct signal in the
+observations. Over ocean, the thermal emission from the rain in the hurricane is
+clearly visible in the observations at $\SI{10}{\giga \hertz}$  shown in
+panel (d) of Fig.~\ref{fig:radiative_transfer:spectrum}.
 
 \section{Satellite observations}
 
-The information content of satellite observations on hydrometeors is strongly
-dependent on the wavelength of the radiation. Because radiation at different
-wavelengths is sensitive to different properties and types of hydrometeors, 
-observations at different wavelength provide complementary information on
-them. In addition to the wavelength, other characteristics of the observations
-such as temporal and spatial resolution determine how well different satellite
-observations can be used to characterize hydrometeors from space.
-
-Due to the technical complexity of operating specialized sensors in space, the
+As the discussion in the previous section showed, observations at different
+wavelengths contain different information on hydrometeors. In addition to that,
+the potential of satellite observations to characterize hydrometeors from space
+depends the type of sensor as well as its temporal and spatial resolution. Due
+to the technical complexity of operating specialized sensors in space, the
 availability of observations and their characteristics are ultimately determined
-by a trade-off between technical and financial constraints on the one side and
-scientific value on the other. Since there is only a very limited number of
-satellite mission dedicated specifically to observations of hydrometeors,
-leveraging the full potential of available satellite imagery requires exploiting
-and combining a wide range of observations of different types.
+by a trade-off between technical and financial constraints on one side and
+scientific value on the other. The following section briefly reviews the
+principal sensors types and satellite platforms that are commonly used for the
+remote sensing of hydrometeors as well as the principal characteristics of
+the observations that they provide.
 
 \subsection{Sensor types}
 
@@ -417,20 +462,45 @@ sensors because they do not emit any radiation themselves. \textit{Active
 sensors}, on the other hand, emit radiation and measure how much of that
 radiation is scattered back to the sensor. The active sensors that are used for
 the remote sensing of hydrometeors are mainly radars and lidars. These sensors
-measure the time of travel between emission and reflection, which can be used to
+measure the time of travel between of the radiation, which can be used to
 infer the distance from the detector in addition to the intensity of the
 reflected radiation. This allows them to profile the atmosphere along the line
-of sight, leading to much higher vertical resolution than what can be obtained
+of sight, leading to much higher vertical resolution than what can be achieved
 with passive sensors.
 
 From an observational perspective, the principal difference between radars and
-lidars are the wavelengths at which they operate. Lidars employ radiation with
-relatively short wavelengths, which makes them sensitive to very small
-hydrometeors as well as molecules and aerosols in the atmosphere. In contrast to
-that, radars operate at MW wavelengths, which makes the sensitive only to
-hydrometeors. In general, active sensors are much more sensitive to the
-scattering from small particles than their passive counterparts because of the
-intensity of the emitted beam.
+lidars are the wavelengths at which they operate. Lidars make use of radiation with
+relatively short wavelengths, which makes them sensitive scattering from
+molecules, aerosol and hydrometeors. In contrast to that, radars operate at MW
+wavelengths, which makes them sensitive to scattering only from hydrometeors.
+Because they emit a powerful beam of radiation, active sensors are much more
+sensitive to the scattering from small particles than their passive
+counterparts because.
+
+An example of radar observations from the Cloud Profiling Radar
+(CPR, \citeauthor{tanelli08}, \citeyear{tanelli08}) on the CloudSat satellite is
+shown in Fig.~\ref{fig:radiative_transfer:cloud_sat}. Because it was designed to
+study clouds, the CPR operates at a relatively high frequency of
+$\SI{94}{\giga \hertz}$. This makes it sensitive not only to precipitation but
+also clouds. For these specific observations, the satellite passed directly over
+the eye of the hurricane, which is clearly visible in the vertically resolved
+observations.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{hurricane_nicole_cloudsat}
+\caption{
+Radar observations of hurricane Nicole from 2016-10-12 at
+17:55 UTC recorded by the CPR on the CloudSat satellite.
+}
+\label{fig:radiative_transfer:cloud_sat}
+\end{figure}
+
+The disadvantage of active sensors is that the horizontal extent of their
+observations in the across the direction of movement, i.e. the width of
+their \textit{swath}, is typically very low. This severely reduces the spatial
+coverage of the observations and leads to very long times between consecutive
+overpasses for a fixed position on Earth.
 
 \subsection{Resolution and coverage}
 
@@ -441,41 +511,43 @@ influence their suitability for different applications.
 
 The orbit in which a satellite is placed plays an important role in determining
 these characteristics. For earth observations, two principal classes of orbits
-can be distinguished: Geostationary and low-earth orbits. Satellites in
+can be distinguished: Geostationary and low-Earth orbits. Satellites in
 geostationary orbit rotate around the Earth at the same angular velocity as the
 Earth rotates around its axis. This allows them to hover over the same position
-on the Earth's surface. Since the field of view of the satellite is constant it
+on the Earth's surface. Since the field of view of the satellite is constant, it
 can provide observations with high temporal resolution at all locations below
 the satellite. This makes these satellite suitable for many near real-time
 applications in weather forecasting.
 
 The disadvantage of geostationary platforms is their long distance from the
-Earth, which is around $36\ \SI{000}{\kilo \meter}$. Since the spatial
-resolution of microwave sensors is limited by the long wavelengths of the
-radiation, they are currently not deployed on these platforms. Geostationary
-therefore typically carry VIS and IR sensors, which can produce observations
-at very high spatial resolutions. Besides that, geostationary satellites
-are always located over or close to the locator. The resulting viewing geometry
-causes their resolution to degrade at high latitudes.
+Earth, which is around $\SI{36000}{\kilo \meter}$. Since the spatial resolution
+of microwave sensors is limited by the long wavelengths of the radiation, they
+are currently not deployed on these platforms. Geostationary satellites
+therefore typically carry VIS and IR sensors, which can produce observations at
+very high spatial resolutions. Besides that, their orbits restricts them to
+locations of the equator. The resulting viewing geometry causes the
+resolution to degrade with increasing latitudes and makes the observations
+unsuitable for observations at very high latitudes.
 
 A common type of low-Earth orbit used for Earth observing satellites are polar
 orbits in which the satellite passes above or nearly above the poles. The
 rotation of the Earth between consecutive orbits allows these satellites to
 achieve global coverage. The low altitude of these orbits ($300
 - \SI{1000}{\kilo \meter}$) makes them suitable also for microwave sensors but
-decreases the spatial coverage of the sensor. The swaths of sensors in low-earth
+decreases the spatial coverage of the sensor. The swaths of sensors in low-Earth
 orbits are typically limited to a few thousand kilometers in width. Depending on
 the exact size of the field of view and the location on Earth, the time between
 consecutive overpasses for a fixed position can be as high as $\SI{12}{\hour}.
 
-Fig.~\ref{fig:remote_sensing:viewing_geometries} shows the field of views of
-the Advanced Baseline Imager on the GOES 16 geostationary satellite and the
-GPM Microwave Imager on the polar-orbiting GPM Core Observatory. The observations
-from both satellites are projected onto the corresponding location on the Earth.
-This illustration clearly shows the differences that the satellite orbit makes
-for the observations. While the geostationary satellite can permanently observe
-a large part of the hemisphere below it, the polar orbiting satellite sees only
-a comparably thin stripe of the globe.
+Fig.~\ref{fig:remote_sensing:viewing_geometries} shows the field of views of the
+Advanced Baseline Imager on the Geostationary Operational Environmental
+Satellite (GOES) 16 and the Global Precipitation Measurement (GPM) Microwave
+Image (GMI) on the polar-orbiting GPM core observatory satellite. The
+observations from both satellites are projected onto the corresponding location
+on the Earth. This illustration clearly shows the differences that the satellite
+orbit makes for the observations. While the geostationary satellite can
+permanently observe a large part of the hemisphere below it, the polar orbiting
+satellite sees only a comparably thin stripe of the globe.
 
 \begin{figure}[!hbpt]
   \centering
@@ -483,52 +555,119 @@ a comparably thin stripe of the globe.
   \caption{Viewing geometries of geostationary and polar-orbiting satellites
   drawn to scale. The illustration shows geo-located satellite observations from
   the GOES 16 geostationary satellite in purple and from the polar-orbiting GPM
-  Core Observatory in orange. The black spheres mark the instantaneous satellite
+  core observatory in orange. The spheres mark the instantaneous satellite
   positions.}
   \label{fig:remote_sensing:viewing_geometries}
 \end{figure}
 
-\subsection{Example: Satllite observations of Hurricane Ida}
+\subsection{Synergies}
+\label{sec:radiative_transfer:synergies}
 
-Figure~\ref{fig:radiative_transfer:observations} illustrates the different types
-of observations used for the remote sensing of hydrometeors using observations
-of Hurricane Ida shortly before landfall on August 30, 2021. The first row of
-panels shows observations derived from the Advanced Baseline Imager on the GOES
-16 geostationary satellite. Panel (a) shows a natural color composite, which
-combines observations from 3 channels from the VIS and NIR to create an image
-emulating human color vision. Panel (b) shows observations from the NIR.
-Differences in the dielectric constant of water and ice cause ice clouds to
-absorb incoming solar radiation much more strongly than water clouds. The high
-ice clouds that cover the Hurricane therefore appear much darker than in the RGB
-image. Panel (c) shows observation from a window channel in the FIR. Since it is
-a window channel, most of the radiation observed in cloud free areas stems from
-the Earth's surface and thus appear bright. Where clouds are present the
-observed brightness temperatures are closely related to the atmospheric
-temperature at the altitude of the cloud and thus colder than the surface.
+Because of the specific strengths of different sensor types and satellite
+platforms, leveraging the full potential of available satellite data often
+involves exploiting synergies between different observation types. An example of
+this is the Global Precipitation Measurement (GPM, \citeauthor{hou14},
+\citeyear{hou14}). The aim of this joint mission lead by NASA and the Japanese Space
+Agency is to provide accurate, global measurements of precipitations with a
+temporal resolution a few hours. The mission comprises a dedicated precipitation
+satellite, the core observatory, which carries a passive microwave sensor, the
+GPM Microwave Imager (GMI) and a precipitation radar. The combination of the
+observation from these two dedicated precipitation sensors are used to produce the
+most accurate space-borne measurements of precipitation that are currently
+available.
 
-Panel (c) and (d) show passive microwave observations at $\SI{18.7}{\giga
-  \hertz}$ and $\SI{166}{\giga \hertz}$. At the very low microwave frequencies
-only the a thermal emission from precipitation in the hurricane is visible over
-the cold ocean surface, while the clouds overland yield no signal. At the higher
-microwave frequencies, the surface is not visible due to emission from water
-vapor. Scattering by snow particles causes a cold scattering signal from the
-thickest clouds around the Hurricane.
+However, because of the narrow swath of the radar, the measurements alone are
+too sparse to be useful for many applications. To overcome this, the GPM mission
+makes use of an opportunistic constellation of passive microwave sensors. This
+constellation consists mostly of operational meteorological sensors, whose
+primary purpose is the provision of observations for weather forecasting.
+However, due to their reliance on microwave observations, they are also
+sensitive to precipitation. The high-accuracy retrievals from the combined
+observations provided by core observatory provides a reference standard, which
+is used for the development of the retrievals from the passive sensors of the
+GPM constellation.
 
-Finally, panel (e) shows Ku-band radar reflectivities from the GPM
-dual-frequency precipitation radar along a vertical cross section of the
-Hurricane. The signal in the radar observations is the amount of energy that is
-reflected back to the sensor. Due to the relatively low frequency of the
-radar, it is only sensitive to large, precipitation hydrometeors.
+The constellation currently comprises nine sensors including GMI. A snapshot of
+these sensors in orbit is shown in
+Fig.~\ref{fig:radiative_transfer:gpm_consteallation}. From the satellite swaths
+drawn on the surface of the Earth it becomes clear that the constellation
+greatly increases the spatial coverage of the measurements. The crossing of the
+swaths of the GMI on GPM and the Advanced Technology Microwave Sounder (ATMS) on
+Suomi NPP also shows the complementary properties of the different sensors of
+the constellation. GMI has a relatively narrow swath and high resolution. The
+swath of ATMS is almost three times as wide but also has a clearly lower spatial
+resolution.
+
+The retrieval from the passive microwave sensors are finally combined with
+observations from geostationary satellites and rain gauges to provide global
+precipitation measurements with half-hourly resolution. The resulting Integrated
+Multi-sattelite Retrievals for the Global Precipitation Measurement (GPM)
+Mission (IMERG, \citeauthor{huffman20}, \citeyear{huffman20}) is widely
+considered the state of the art of instantaneous, global precipitation
+measurement By integrating observations retrievals from a dedicated
+precipitation satellites, a constellation of passive microwave diverse sensor
+characteristics as well as geostationary observations and ground measurement,
+the GPM mission maximizes the potential of available precipitation data.
 
 
-\begin{figure}
-  \centering
-\includegraphics[width=\textwidth]{observations}
-\caption{Satellite observations of Hurricane Ida on 2021-08-29 15:09 UTC.
-  Panels (a), (b), (c) show observations from the VIS and IR regions obtained
-  by the Advanced Baseline Imager on the GOES 16 geostarionary satellite.
-  Panels (d) and (e) show passive microwave observations from the GPM microwave
-  imager. Panel (f) shows the curtain of radar reflectivity measured by the GPM dual-frequency
-  precipitation radar (DPR) along the dashed line shown in panel (a).}
-\label{fig:radiative_transfer:observations}
+\begin{figure}[!hbpt]
+\centering
+\includegraphics[width=0.4\textwidth]{gpm_constellation}
+\caption{
+Currently operational passive microwave sensors of the GPM constellation in
+orbit around the Earth (drawn to scale) on 2022-04-19 11:26:00 UTC. Black
+spheres show the location of the satellites and their names. Orange coloring on
+the Earth's surface show for each sensor the observations closest to
+$\SI{89}{\giga \hertz}$. Note that only six of the currently ten operational
+sensors are visible.
+}
+\label{fig:radiative_transfer:gpm_constallation}
 \end{figure}
+
+
+
+%\subsection{Example: Satellite observations of Hurricane Ida}
+
+%Figure~\ref{fig:radiative_transfer:observations} illustrates the different types
+%of observations used for the remote sensing of hydrometeors using observations
+%of Hurricane Ida shortly before landfall on August 30, 2021. The first row of
+%panels shows observations derived from the Advanced Baseline Imager on the GOES
+%16 geostationary satellite. Panel (a) shows a natural color composite, which
+%combines observations from 3 channels from the VIS and NIR to create an image
+%emulating human color vision. Panel (b) shows observations from the NIR.
+%Differences in the dielectric constant of water and ice cause ice clouds to
+%absorb incoming solar radiation much more strongly than water clouds. The high
+%ice clouds that cover the Hurricane therefore appear much darker than in the RGB
+%image. Panel (c) shows observation from a window channel in the FIR. Since it is
+%a window channel, most of the radiation observed in cloud free areas stems from
+%the Earth's surface and thus appear bright. Where clouds are present the
+%observed brightness temperatures are closely related to the atmospheric
+%temperature at the altitude of the cloud and thus colder than the surface.
+%
+%Panel (c) and (d) show passive microwave observations at $\SI{18.7}{\giga
+%  \hertz}$ and $\SI{166}{\giga \hertz}$. At the low microwave frequency
+%only the a thermal emission from precipitation in the hurricane is visible over
+%the cold ocean surface, while the clouds overland yield no signal. At the higher
+%microwave frequency, the surface is not visible due to emission from water
+%vapor. Scattering by snow particles causes a cold scattering signal from the
+%thickest clouds around the Hurricane.
+%
+%Finally, panel (e) shows Ku-band radar reflectivities from the GPM
+%dual-frequency precipitation radar along a vertical cross section of the
+%Hurricane. The signal in the radar observations is the amount of energy that is
+%reflected back to the sensor. Due to the relatively low frequency of the
+%radar, it is only sensitive to large, precipitation hydrometeors.
+%
+%
+%\begin{figure}
+%  \centering
+%\includegraphics[width=\textwidth]{observations}
+%\caption{Satellite observations of Hurricane Ida on 2021-08-29 15:09 UTC.
+%  Panels (a), (b), (c) show observations from the VIS and IR regions obtained
+%  by the Advanced Baseline Imager on the GOES 16 geostarionary satellite.
+%  Panels (d) and (e) show passive microwave observations from the GPM microwave
+%  imager. Panel (f) shows the curtain of radar reflectivity measured by the GPM dual-frequency
+
+%  precipitation radar (DPR) along the dashed line shown in panel (a).}
+%\label{fig:radiative_transfer:observations}
+%\end{figure}
