@@ -1,4 +1,4 @@
-\documentclass[12pt, a4paper, twoside]{report}
+\documentclass[12pt, a4paper, twoside, openright]{report}
 \usepackage[utf8]{inputenc}
 %%% Graphics
 \usepackage{graphicx}
@@ -29,6 +29,7 @@
 %%% Don't break lists
 \usepackage{enumitem}
 \usepackage{parskip}% http://ctan.org/pkg/parskip
+\usepackage{url}
 
 % Appearance
 %\usepackage{sectsty}
@@ -108,6 +109,7 @@
 \chapter{Contributions}
 \input{chapters/contributions}
 
+\raggedright
 \bibliographystyle{plainnat}
 \bibliography{references} 
 
@@ -116,37 +118,37 @@
 \renewcommand{\chaptername}{Paper}
 \setcounter{chapter}{0}
 
-%\chapter{A neural network approach to estimating a posteriori distributions of Bayesian retrieval problems} 
-%\chaptermark{Neural networks for Bayesian retrieval problems}            % Short title for the page header
-%\label{chap:qrnn}
-%\thispagestyle{empty}
-%\cleardoublepage            % skip back side of the page
-%\includepdf[pages=-]{papers/amt-11-4627-2018}
-%
-%\chapter{GPROF-NN: A neural network based implementation of the Goddard Profiling Algorithm} 
-%\chaptermark{GPROF-NN}
-%\label{chap:qrnn}
-%\thispagestyle{empty}       % no page numbers
-%\cleardoublepage            % skip back side of the page
-%\includepdf[pages=-]{papers/gprof_nn_manuscript}
-%
-%\chapter{Evolution of the GPROF passive microwave precipitation retrievals evaluated against ground radar measurements over the continental US and the Pacific Ocean} 
-%\chaptermark{GPROF: Evolution and validation}
-%\label{chap:qrnn}
-%\thispagestyle{empty}       % no page numbers
-%\cleardoublepage            % skip back side of the page
-%\includepdf[pages=-]{papers/gprof_validation}
-%
-%\chapter{An improved near-real time precipitation retrieval for Brazil} 
-%\chaptermark{Near-real time precipitation retrieval for Brazil}
-%\thispagestyle{empty}       % no page numbers
-%\cleardoublepage            % skip back side of the page
-%\includepdf[pages=-]{papers/manuscript}
-%
-%\chapter{Can machine learning correct microwave humidity radiances for the influence of clouds?} 
-%\chaptermark{Correcting microwave humidity radiances for the influence of clouds}
-%\thispagestyle{empty}       % no page numbers
-%\cleardoublepage            % skip back side of the page
-%\includepdf[pages=-]{papers/amt-14-2957-2021}
+\chapter{A neural network approach to estimating a posteriori distributions of Bayesian retrieval problems} 
+\chaptermark{Neural networks for Bayesian retrieval problems}            % Short title for the page header
+\label{chap:qrnn}
+\thispagestyle{empty}
+\cleardoublepage            % skip back side of the page
+\includepdf[pages=-]{papers/amt-11-4627-2018}
+
+\chapter{GPROF-NN: A neural network based implementation of the Goddard Profiling Algorithm} 
+\chaptermark{GPROF-NN}
+\label{chap:qrnn}
+\thispagestyle{empty}       % no page numbers
+\cleardoublepage            % skip back side of the page
+\includepdf[pages=-]{papers/gprof_nn}
+
+\chapter{Evolution of the GPROF passive microwave precipitation retrievals evaluated against ground radar measurements over the continental US and the Pacific Ocean} 
+\chaptermark{GPROF: Evolution and validation}
+\label{chap:qrnn}
+\thispagestyle{empty}       % no page numbers
+\cleardoublepage            % skip back side of the page
+\includepdf[pages=-]{papers/gprof_nn_validation}
+
+\chapter{An improved near-real time precipitation retrieval for Brazil} 
+\chaptermark{Near-real time precipitation retrieval for Brazil}
+\thispagestyle{empty}       % no page numbers
+\cleardoublepage            % skip back side of the page
+\includepdf[pages=-]{papers/hydronn}
+
+\chapter{Can machine learning correct microwave humidity radiances for the influence of clouds?} 
+\chaptermark{Correcting microwave humidity radiances for the influence of clouds}
+\thispagestyle{empty}       % no page numbers
+\cleardoublepage            % skip back side of the page
+\includepdf[pages=-]{papers/amt-14-2957-2021}
 
 \end{document}

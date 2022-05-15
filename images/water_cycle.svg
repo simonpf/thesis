@@ -7,7 +7,7 @@
    viewBox="0 0 299.49203 171.83606"
    version="1.1"
    id="svg24342"
-   inkscape:export-filename="/home/simon/src/thesis/water_cycle.png"
+   inkscape:export-filename="/home/simon/src/thesis/water_cycle_energy.png"
    inkscape:export-xdpi="200"
    inkscape:export-ydpi="200"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
@@ -33,14 +33,14 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="0.56126601"
+     inkscape:zoom="0.66641375"
      inkscape:rotation="-1"
-     inkscape:cx="480.97785"
-     inkscape:cy="449.43009"
+     inkscape:cx="501.92263"
+     inkscape:cy="521.28356"
      inkscape:window-width="1900"
-     inkscape:window-height="960"
-     inkscape:window-x="1928"
-     inkscape:window-y="88"
+     inkscape:window-height="1038"
+     inkscape:window-x="8"
+     inkscape:window-y="8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1">
     <sodipodi:guide
@@ -2891,7 +2891,7 @@
          sodipodi:nodetypes="cc" />
       <path
          style="fill:none;stroke:#002255;stroke-width:1.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="M 465.30909,255.97484 V 211.38298"
+         d="M 470.23895,255.97484 V 211.38298"
          id="path36875"
          sodipodi:nodetypes="cc" />
       <path
@@ -2914,7 +2914,7 @@
          inkscape:rounded="0"
          inkscape:randomized="0"
          d="m 2063.6411,327.89545 -16.8437,0 8.4218,-14.58711 z"
-         transform="matrix(0.33657539,0,0,0.33657539,-226.51155,121.62337)"
+         transform="matrix(0.33657539,0,0,0.33657539,-221.42926,121.62337)"
          inkscape:transform-center-x="1.7176854e-05"
          inkscape:transform-center-y="-0.81827615" />
     </g>
@@ -3110,9 +3110,27 @@
            d="m 91.513677,172.01108 a 2.1178608,3.5129318 45 0 0 -3.794883,0.8083 2.2002962,3.6496688 45 0 0 -0.430367,-1.0663 2.2002962,3.6496688 45 0 0 -4.136242,1.02446 2.2002962,3.6496688 45 0 0 -1.024891,4.13667 2.2002962,3.6496688 45 0 0 0.334332,0.24127 1.5852636,2.629504 45 0 0 -0.566504,2.7967 1.5852636,2.629504 45 0 0 1.795015,0.0897 1.3164703,2.1836517 45 0 0 0.257841,0.7266 1.3164703,2.1836517 45 0 0 1.44201,0.0952 1.5856678,2.6301742 45 0 0 0.310426,0.86363 1.5856678,2.6301742 45 0 0 2.91133,-0.67074 1.8958109,3.1446138 45 0 0 0.362666,0.82023 1.8958109,3.1446138 45 0 0 3.564167,-0.88305 1.8958109,3.1446138 45 0 0 0.883051,-3.56417 1.8958109,3.1446138 45 0 0 -1.206671,-0.36221 2.038517,3.381323 45 0 0 -6.41e-4,-2.54437 2.038517,3.381323 45 0 0 -0.501539,-0.30679 2.1178608,3.5129318 45 0 0 -0.1991,-2.20513 z" />
       </g>
     </g>
+    <g
+       id="path47967"
+       style="fill:#ffdd55;fill-opacity:0.6"
+       transform="translate(0,2.3292747)">
+      <path
+         style="color:#000000;fill:#ffdd55;fill-opacity:0.6;stroke-width:17;-inkscape-stroke:none"
+         d="m 589.22779,150.70193 -49.43056,50.17665"
+         id="path82081" />
+    </g>
     <path
        id="path45544-1"
        style="fill:#e6e6e6;fill-opacity:1;stroke:#999999;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stop-color:#000000"
        d="m 552.1018,200.54018 a 6.2763489,6.2763495 80.227208 0 0 -7.17324,4.64029 6.5206489,6.5206495 80.385297 0 0 -2.94916,-1.33581 6.5206489,6.5206495 80.385297 0 0 -7.55392,5.28837 6.5206489,6.5206495 80.385297 0 0 5.28943,7.55411 6.5206489,6.5206495 80.385297 0 0 1.20829,0.0937 4.6979802,4.6979805 41.509731 0 0 3.86464,4.99587 4.6979802,4.6979805 41.509731 0 0 4.26359,-1.43585 3.9014022,3.9014026 82.069168 0 0 1.92875,0.94143 3.9014022,3.9014026 82.069168 0 0 3.4678,-1.11627 4.6991778,4.6991782 80.357754 0 0 2.30154,1.11549 4.6991778,4.6991782 80.357754 0 0 5.40972,-3.64131 5.6182968,5.6182974 82.966619 0 0 2.34077,0.99972 5.6182968,5.6182974 82.966619 0 0 6.50863,-4.5574 5.6182968,5.6182974 82.966619 0 0 -4.5574,-6.50866 5.6182968,5.6182974 82.966619 0 0 -3.42295,0.47975 6.0412112,6.0412116 70.686955 0 0 -4.6941,-4.09088 6.0412112,6.0412116 70.686955 0 0 -1.71087,-0.0518 6.2763489,6.2763495 80.227208 0 0 -4.52152,-3.37068 z" />
+    <g
+       id="path48082"
+       style="fill:#ffdd55;fill-opacity:0.6"
+       transform="translate(-11.670582,-0.04193147)">
+      <path
+         style="color:#000000;fill:#ffdd55;fill-opacity:0.6;stroke-width:3.7;-inkscape-stroke:none"
+         d="M 546.96294,196.04049 468.4213,117.49884"
+         id="path82123" />
+    </g>
   </g>
 </svg>

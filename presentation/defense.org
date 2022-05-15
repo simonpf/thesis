@@ -1,0 +1,372 @@
+#+TITLE: Improving satellite measurements of clouds and precipitation using machine learning
+#+SUBTITLE: 
+#+AUTHOR: Simon Pfreundschuh
+#+EMAIL: simon.pfreundschuh@chalmers.se
+#+REVEAL_ROOT: reveal.js
+#+REVEAL_ADD_PLUGIN: drawer RevealDrawer plugin/drawer/drawer.js
+#+REVEAL_THEME: chalmers
+#+REVEAL_HLEVEL: 1
+#+REVEAL_TRANS: fade-in
+#+REVEAL_EXTRA_CSS: reveal.js/plugin/drawer/drawer.css
+#+OPTIONS: toc:nil num:nil reveal_center:t reveal_height:"100%"" reveal_width:"100%"
+#+LATEX_HEADER: \usepackage[backend=biber,style=alphabetic]{biblatex}
+#+REVEAL_INIT_SCRIPT: dependencies: [{ src: 'http://localhost:3001/socket.io/socket.io.js', async: true }, { src: 'reveal.js/plugin/plugins/remote-control/remote.js', async: true }]
+#+REVEAL_POSTAMBLE: <script src="socket.io/socket.io.js"></script> <script src="reveal.js/node_modules/reveal-notes-server/client.js"></script>
+#+bibliography: references.bib
+#+cite_export: csl
+* Introduction
+#+attr_html: :width 90% :style margin: auto; display: block;
+[[./retrieval_1.png]]
+
+** The importance of water
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%; height: 100%">
+**** **Water as resource**
+  1. Food production
+  2. Ecosystems
+  3. Industry, energy, personal use
+**** **The global hydrological cycle**
+  1. Transports freshwater from ocean to land
+  2. Coupled to the Earth's energy budget
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%; height: 100%">
+#+attr_html: :width 100%
+#+BEGIN_EXPORT html
+<div class="r-stack">
+  <img class="fragment fade-out" data-fragment-index="0" src="./water.svg" width="100%">
+  <img class="fragment current-visible" data-fragment-index="0" src="./water_cycle.svg" width="100%">
+  <img class="fragment"  src="./water_cycle_energy.svg" width="100%">
+</div>
+#+END_EXPORT
+#+REVEAL_HTML: </div>
+
+** Observing the hydrological cycle
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%; height: 100%">
+**** **Observations of the global hydrological cycle required for**
+  - climate monitoring and modeling
+  - water management
+  - weather forecasts
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%; height: 100%">
+#+attr_html: :width 80% :style margin: auto; display: block;
+[[./hydrological_cycle_climate.svg]]
+#+REVEAL_HTML: </div>
+
+** Outline
+
+1. Satellite observations of hydrometeors
+2. From observations to measurements
+3. Results
+4. Summary and future work
+
+* Satellite observations of hydrometeors
+#+attr_html: :width 80% :style margin: 4em auto 4em auto; display: block;
+[[./observations.svg]]
+** Satellite observations across the electromagnetic spectrum
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%; height: 100%">
+**** **Impact of the wavelength**
+   - Short wavelelengths dominated by solar radiation
+   - Longer wavelengths ($\lambda > 3 \mu$) dominated by thermal emission
+   - Sensitivity to hydrometeors determined by phase as well as
+     size in relation to wavelength.
+
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%;">
+#+BEGIN_CENTER
+#+attr_html: :width 95% :style margin: auto; display: block;
+[[./spectrum_complete.png]]
+#+END_CENTER
+#+REVEAL_HTML: </div>
+
+** Sensor types
+    :PROPERTIES:
+    :reveal_background: ./radar.gif
+    :reveal_background_trans: slide
+    :reveal_background_size: auto 100%
+    :reveal_background_position: 130% 100%
+    :END:
+
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%; height: 100%">
+**** *Active sensors*
+   - Emit radiation and measure how much is reflected
+   - High sensitivity and vertical resolution
+   - Limited horizontal coverage
+#+REVEAL_HTML: </div>
+
+** Sensor types
+    :PROPERTIES:
+    :reveal_background: ./radiometer.gif
+    :reveal_background_trans: slide
+    :reveal_background_size: auto 100%
+    :reveal_background_position: 130% 100%
+    :reveal_background_trans: none
+    :END:
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%; height: 100%">
+**** *Passive sensors*
+   - Measure reflected sunlight or thermal emission from Earth and its atmosphere
+   - Limited vertical resolution
+   - Higher horizontal coverage
+#+REVEAL_HTML: </div>
+
+     
+** Orbit types
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%;">
+**** *Geostationary*
+    - Rotate at the same velocity as the Earth
+    - Placed on fixed point over equator
+    - Long distance from Earth (~ 36 000 km)
+    - Limited to passive sensors and visible and infrared wavelengths
+**** *Low-Earth orbit*
+    - Low orbit
+    - Limited spatial coverage
+    - Suitable for active and microwave sensors
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%;">
+#+BEGIN_CENTER
+#+attr_html: :width 100% :style margin: auto; display: block;
+[[./viewing_geometries.png]]
+#+END_CENTER
+#+REVEAL_HTML: </div>
+
+** Synergies
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%;">
+**** *Problem*
+   - Sensor and satellite type determine measurement characteristics
+
+**** *Solution*
+   - Combine strengths of different sensor and satellite types into
+   - Example: *The Global Precipitation Measurment (GPM)*:
+     1. Core observatory with radar and passive microwave sensor
+     2. Constellation of passive microwave sensors
+     3. Geostationary sensors
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%;">
+#+BEGIN_CENTER
+#+BEGIN_EXPORT html
+<div class="r-stack">
+  <img class="fragment fade-out" data-fragment-index="0" src="./core_observatory.gif" width="100%">
+  <img class="fragment current-visible" data-fragment-index="0" src="./constellation.gif" width="100%">
+</div>
+#+END_EXPORT
+#+END_CENTER
+#+REVEAL_HTML: </div>
+
+* From observations to measurements
+#+REVEAL_HTML: <div class="column" style="float:right; width: 70%;">
+#+attr_html: :width 100% :style margin: auto; display: block;
+[[./retrieval_1.png]]
+#+REVEAL_HTML: </div>
+
+** From observations to measurements
+#+REVEAL_HTML: <div class="column" style="float:left; width: 30%;">
+**** *Machine-learning based retrievals*
+- Learn mapping $y = f(\mathbf{x})$ from data
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 70%;">
+#+attr_html: :width 100% :style margin: auto; display: block;
+[[./retrieval_ml.png]]
+#+REVEAL_HTML: </div>
+
+** Neural networks
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%;">
+**** *Fully-connected neural networks*
+  - Consists of a sequence of @@html:<font color="7137c8">@@parametrized@@html:</font>@@ transformations (layers)
+  - @@html:<font color="7137c8">@@Parameters@@html:</font>@@ are learned from training data by minimizing a loss function
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%;">
+#+attr_html: :width 100% :style margin: auto; display: block;
+#+BEGIN_EXPORT html
+<div class="r-stack">
+  <img class="fragment fade-out" data-fragment-index="0" src="./fully_connected_1.png" width="80%">
+  <img class="fragment current-visible" data-fragment-index="0" src="./fully_connected_2.png" width="80%">
+  <img class="fragment" src="./fully_connected_3.png" width="80%">
+</div>
+#+END_EXPORT
+#+REVEAL_HTML: </div>
+
+** Neural networks
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%;">
+**** *Convolutional neural networks*
+ - Fully-connected neural networks don't work well with 
+
+  - Consists of a sequence of @@html:<font color="7137c8">@@parametrized@@html:</font>@@ transformations (layers)
+  - @@html:<font color="7137c8">@@Parameters@@html:</font>@@ are learned from training data by minimizing a loss function
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%;">
+#+attr_html: :width 80% :style margin: auto; display: block;
+#+BEGIN_EXPORT html
+<div class="r-stack">
+  <img class="fragment fade-out" data-fragment-index="0" src="./convolution.png" width="60%">
+  <img class="fragment current-visible" data-fragment-index="0" src="./encoder_decoder.png" width="80%">
+</div>
+#+END_EXPORT
+#+REVEAL_HTML: </div>
+
+** Bayesian retrieval methods
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%;">
+**** *Problem*
+   - Cannot associate unique solution $\mathbf{y}$ to
+     observations $\mathbf{x}$
+**** *Solution*
+   - Bayesian framework:
+     - Solution is posterior distribution @@html:<font color="c83737ff">@@ $p(\mathbf{y}|\mathbf{x})$@@html:</font>@@
+     - Represents @@html:<font color="c83737ff">@@ /knowledge/ @@html:</font>@@ about $\mathbf{y}$ after measurement $\mathbf{x}$
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%;">
+#+BEGIN_EXPORT html
+<div class="r-stack">
+  <img class="fragment fade-out" data-fragment-index="0" src="./retrieval_ill.png" width="100%">
+  <img class="fragment current-visible" data-fragment-index="0" src="./retrieval_ill_2.png" width="100%">
+</div>
+#+END_EXPORT
+#+REVEAL_HTML: </div>
+
+
+* Results
+#+attr_html: :width 40% :style display: block; margin: auto;
+[[./results.png]]
+
+** Paper 1
+#+attr_html: :width 70% :style display: block; margin: auto;
+[[./bayesian_vs_nn.svg]]
+** Paper 1
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%; height: 100%">
+**** *Quantile regression neural networks (QRNNs)*
+   - Train neural network to predict quantiles of distribution $p(\mathbf{y}|\mathbf{x})$
+   - Learned solution equivalent to that ob Bayesian retrieval methods if training data is
+     distributed according to the a priori distribution
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%; height: 100%">
+#+attr_html: :width 80% :style margin: 4em auto 4em auto; display: block;
+[[./qrnn.png]]
+#+REVEAL_HTML: </div>
+** Paper 1
+#+attr_html: :width 70%
+[[./bayesian_vs_nn_2.svg]]
+
+** Paper 2
+:PROPERTIES:
+:reveal_background: ./gprof_nn_principle.png
+:reveal_background_trans: slide
+:reveal_background_size: auto 70%
+:reveal_background_position: 90% 25%
+:reveal_background_trans: none
+:END:
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%; height: 100%">
+**** *Background*
+ - The Goddard Profiling Algorithm (GPROF) is used to retrieve surface precipitation and
+   hydrometeor profiles for the passive microwave observations of GPM
+**** **Research questions**
+1. To what extent can the retrieval be improved if the current method is replaced
+  with an equivalent neural-network-based implementation?
+2. Can further improvements be realized if spatial information is included in
+  the retrieval?
+#+REVEAL_HTML: </div>
+
+** Paper 2
+#+REVEAL_HTML: <div class="column" style="float:left; width: 30%; height: 100%">
+**** *Results*
+- Consistent improvements in retrieval accuracy across all retrieved quantities
+- Effective resolution improved by 40%
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 70%; height: 100%">
+#+attr_html: :width 100%
+[[./results_scatter_gmi.png]]
+#+REVEAL_HTML: </div>
+
+
+** Paper 3
+:PROPERTIES:
+:reveal_background: ./mrms_overview.png
+:reveal_background_trans: slide
+:reveal_background_size: auto 60%
+:reveal_background_position: 115% 30%
+:reveal_background_trans: none
+:END:
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%; height: 100%">
+**** *Background*
+ - Evaluation in Paper 2 limited to data with same statistics as training
+   data
+**** **Research questions**
+1. To what extent do the improvements carry over to validation
+   against independent precipitation measurements?
+2. What determines the accuracy of GPROF w. r. t. ground-based measurements?
+#+REVEAL_HTML: </div>
+
+** Paper 3
+#+REVEAL_HTML: <div class="column" style="float:left; width: 30%; height: 100%">
+**** *Results*
+- Improvements in retrieval accuracy confirmed
+- Doubling of effective resolution over land
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 70%; height: 100%">
+#+BEGIN_EXPORT html
+<div class="r-stack">
+  <img class="fragment fade-out" data-fragment-index="0" src="./gprof_nn_validation_metrics.svg" width="100%">
+  <img class="fragment current-visible" data-fragment-index="0" src="./effective_resolution_gmi_conus.svg" width="80%">
+</div>
+#+END_EXPORT
+#+REVEAL_HTML: </div>
+
+** Paper 4
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%; height: 100%">
+**** *Background*
+ - Real-time precipitation retrieval used by the Brazilian National Space Agency
+   still very simple
+**** **Research questions**
+1. To what extent can the retrieval be improved through the use of deep neural networks?
+2. What are the advantages of the probabilistic retrieval results?
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%; height: 100%">
+#+attr_html: :width 65% :style margin: auto; display: block;
+[[./brazil_tc.png]]
+#+REVEAL_HTML: </div>
+
+
+** Paper 4
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%; height: 100%">
+**** *Results*
+ - Significant improvements in retrieval accuracy
+ - Probabilistic retrieval improves detection of extreme precipitation events
+  
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%; height: 100%">
+#+attr_html: :width 65% :style margin: auto; display: block;
+[[./case_study.svg]]
+#+REVEAL_HTML: </div>
+
+
+* Summary and future work
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 30%; height: 100%">
+**** *Principal results*
+- Established equivalence between Bayesian retrieval and probabilistic NNs
+- Demonstrated advantages of deep-learning-based retrievals
+- Retrieval algorithms planned for use in operational processing 
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 70%; height: 100%">
+#+attr_html: :width 65% :style margin: auto; display: block;
+[[./bayesian_vs_nn_2.svg]]
+#+REVEAL_HTML: </div>
+
+** Summary and future work
+#+REVEAL_HTML: <div class="column" style="float:left; width: 30%; height: 100%">
+**** *Next steps*
+- Operational implementation of GPROF-NN retrievals
+- Operational implementation of Hydronn retrievals
+**** *Future work*  
+- Merging of passive microwave and geostationary imagery
+- Further improvements of the GPM passive microwave retrievals
+#+REVEAL_HTML: </div>
+
+
+** Outlook - GPROF NN High Resolution
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 100%; height: 100%">
+#+REVEAL_HTML: <video controls autoplay class="fragment fade-out" data-fragment-index="0" src="./ida_gprof.mp4" width="80%" style="margin: auto; display:block">
+#+REVEAL_HTML: </div>

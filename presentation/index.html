@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Improving satellite measurements of precipitation using machine learning</title>
+<meta name="author" content="Simon Pfreundschuh"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="reveal.js/dist/theme/chalmers.css" id="theme"/>
+
+<link rel="stylesheet" href="reveal.js/plugin/drawer/drawer.css"/>
+<script src="plugin/drawer/drawer.js"></script><link rel="stylesheet" href="plugin/drawer/drawer.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<div class = "title"><h1>Improving satellite measurements of precipitation using machine learning</h1><h2></h2><div class="institution">Simon Pfreundschuh </br> <a href="mailto:simon.pfreundschuh@chalmers.se">simon.pfreundschuh@chalmers.se</a></div><div class="date"></div></div>
+</section>
+<section>
+<section id="slide-org2c9b6e5">
+<h2 id="org2c9b6e5">Introduction</h2>
+<ul>
+<li>From satellite observations to physical measurements</li>
+
+</ul>
+</section>
+<section id="slide-org52324ce">
+<h3 id="org52324ce">The importance of water</h3>
+<div class="column" style="float:left; width: 40%; height: 100%">
+<ul class="org-ul">
+<li><a id="org8a56be5"></a><b><b>Water as resource</b></b><br />
+<ul>
+<li>Food production</li>
+<li>Ecosystems</li>
+<li>Industry, energy, personal use</li>
+
+</ul>
+</div>
+<div class="column" style="float:right; width: 60%; height: 100%">
+
+<div id="orgefb35c4" class="figure">
+<p><img src="./water.svg" alt="water.svg" class="org-svg" width="100%" />
+</p>
+</div>
+</div>
+</li>
+</ul>
+</section>
+<section id="slide-org804a21d">
+<h3 id="org804a21d">The importance of water</h3>
+<div class="column" style="float:left; width: 40%; height: 100%">
+<ul class="org-ul">
+<li><a id="org84f2a49"></a><b><b>The global hydrological cycle</b></b><br />
+<ul>
+<li>Transports freshwater from ocean to land</li>
+<li>Coupled to the Earth's energy budget</li>
+
+</ul>
+</div>
+<div class="column" style="float:right; width: 60%; height: 100%">
+<p width="100%">
+#+BEGIN<sub>EXPORT</sub> html
+&lt;div class="r-stack"&gt;
+  &lt;img class="fragment fade-out" data-fragment-index="0" src="./water<sub>cycle.svg</sub>" width="100%"&gt;
+  &lt;img class="fragment current-visible" data-fragment-index="0" src="./water<sub>cycle</sub><sub>energy.svg</sub>_" width="100%"&gt;
+#+BEGIN<sub>EXPORT</sub> html
+</p>
+</div>
+</li>
+</ul>
+</section>
+<section id="slide-orgc3368e6">
+<h3 id="orgc3368e6">Observing the hydrological cycle</h3>
+</section>
+<section id="slide-orgc3a38bf">
+<h3 id="orgc3a38bf">This thesis work</h3>
+
+</section>
+<section id="slide-org4c20c25">
+<h3 id="org4c20c25">Outline</h3>
+</section>
+</section>
+<section>
+<section id="slide-orgfe2b7e8">
+<h2 id="orgfe2b7e8">Satellite observations</h2>
+<div class="outline-text-2" id="text-orgfe2b7e8">
+</div>
+</section>
+<section id="slide-org22b7572">
+<h3 id="org22b7572">The electromagnetic spectrum</h3>
+<div class="column" style="float:left; width: 40%; height: 100%">
+<ul class="org-ul">
+<li><a id="org544bab1"></a><b><b>Impact of the wavelength</b></b><br />
+<ul>
+<li>Short wavelelengths dominated by solar radiation</li>
+<li>Longer wavelengths (\(\lambda > 3 \mu\)) dominated by thermal emission</li>
+<li>Sensitivity to hydrometeors determined by phase as well as
+size in relation to wavelength.</li>
+
+</ul>
+
+</div>
+<div class="column" style="float:right; width: 60%;">
+<div class="org-center">
+
+<div id="orgf686d0d" class="figure">
+<p><img src="./spectrum_complete.png" alt="spectrum_complete.png" width="90%" style="margin: auto; display: block;" />
+</p>
+</div>
+</div>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-org0d6a7bf" data-background="./radar.gif" data-background-size="auto 100%" data-background-position="130% 100%" data-background-transition="slide">
+<h3 id="org0d6a7bf">Sensor types</h3>
+<div class="column" style="float:left; width: 70%; height: 100%">
+<ul class="org-ul">
+<li><a id="org9c65577"></a><b>Aktive sensoren (Radar, Lidar)</b><br />
+<ul>
+<li>Messen Reflektion von selbst ausgesandter Strahlung</li>
+<li>Sehr hohe Sensitivität und vertikale Auflösung</li>
+<li>Begrenzte horizontale Abdeckung</li>
+
+</ul>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-org1bbb55b" data-background="./radiometer.gif" data-background-size="auto 100%" data-background-position="130% 100%" data-background-transition="none">
+<h3 id="org1bbb55b">Sensor types</h3>
+<div class="column" style="float:left; width: 70%; height: 100%">
+<ul class="org-ul">
+<li><a id="org8ff72c3"></a><b>Passive sensoren</b><br />
+<ul>
+<li>Messen reflektiertes Sonnenlicht oder Wärmestrahlung der Erde</li>
+<li>Begrenzte vertikale Auflösung</li>
+<li>Höhere horizontale Abdeckung</li>
+
+</ul>
+</div>
+</li>
+</ul>
+
+
+</section>
+<section id="slide-org6785dfa">
+<h3 id="org6785dfa">Orbit types</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf2d47a6">
+<h2 id="orgf2d47a6">Machine learning</h2>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orge2079b0">
+<h2 id="orge2079b0">Applications</h2>
+
+</section>
+</section>
+<section>
+<section id="slide-org2e02b3d">
+<h2 id="org2e02b3d">Summary and future work</h2>
+</section>
+</section>
+</div>
+</div>
+<script src="reveal.js/dist/reveal.js"></script>
+<script src="reveal.js/plugin/markdown/markdown.js"></script>
+<script src="reveal.js/plugin/notes/notes.js"></script>
+<script src="reveal.js/plugin/search/search.js"></script>
+<script src="reveal.js/plugin/zoom/zoom.js"></script>
+<script src="reveal.js/plugin/drawer/drawer.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+overview: true,
+width: "100%",
+height: "100%",
+
+transition: 'fade-in',
+transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealSearch, RevealZoom, RevealDrawer ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+]
+
+,dependencies: [{ src: 'http://localhost:3001/socket.io/socket.io.js', async: true }, { src: 'reveal.js/plugin/plugins/remote-control/remote.js', async: true }]});
+</script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Improving satellite measurements of clouds and precipitation using machine learning</title>
+<meta name="author" content="Simon Pfreundschuh"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="reveal.js/dist/theme/chalmers.css" id="theme"/>
+
+<link rel="stylesheet" href="reveal.js/plugin/drawer/drawer.css"/>
+<script src="plugin/drawer/drawer.js"></script><link rel="stylesheet" href="plugin/drawer/drawer.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<div class = "title"><h1>Improving satellite measurements of clouds and precipitation using machine learning</h1><h2></h2><div class="institution">Simon Pfreundschuh </br> <a href="mailto:simon.pfreundschuh@chalmers.se">simon.pfreundschuh@chalmers.se</a></div><div class="date"></div></div>
+</section>
+<section>
+<section id="slide-org79fcc21">
+<h2 id="org79fcc21">Introduction</h2>
+
+<div id="org4f4b97b" class="figure">
+<p><img src="./retrieval_1.png" alt="retrieval_1.png" width="90%" style="margin: auto; display: block;" />
+</p>
+</div>
+
+</section>
+<section id="slide-org9810b4d">
+<h3 id="org9810b4d">The importance of water</h3>
+<div class="column" style="float:left; width: 40%; height: 100%">
+<ul class="org-ul">
+<li><a id="orgc4a9793"></a><b><b>Water as resource</b></b><br />
+<ol>
+<li>Food production</li>
+<li>Ecosystems</li>
+<li>Industry, energy, personal use</li>
+
+</ol>
+</li>
+<li><a id="orge4851d6"></a><b><b>The global hydrological cycle</b></b><br />
+<ol>
+<li>Transports freshwater from ocean to land</li>
+<li>Coupled to the Earth's energy budget</li>
+
+</ol>
+</div>
+<div class="column" style="float:right; width: 60%; height: 100%">
+<div class="r-stack">
+  <img class="fragment fade-out" data-fragment-index="0" src="./water.svg" width="100%">
+  <img class="fragment current-visible" data-fragment-index="0" src="./water_cycle.svg" width="100%">
+  <img class="fragment"  src="./water_cycle_energy.svg" width="100%">
+</div>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-orgc6fab38">
+<h3 id="orgc6fab38">Observing the hydrological cycle</h3>
+<div class="column" style="float:left; width: 40%; height: 100%">
+<ul class="org-ul">
+<li><a id="org11a101a"></a><b><b>Observations of the global hydrological cycle required for</b></b><br />
+<ul>
+<li>climate monitoring and modeling</li>
+<li>water management</li>
+<li>weather forecasts</li>
+
+</ul>
+</div>
+
+<div class="column" style="float:right; width: 60%; height: 100%">
+
+<div id="org275511f" class="figure">
+<p><img src="./hydrological_cycle_climate.svg" alt="hydrological_cycle_climate.svg" class="org-svg" width="80%" style="margin: auto; display: block;" />
+</p>
+</div>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-org9c0d0bd">
+<h3 id="org9c0d0bd">Outline</h3>
+<ol>
+<li>Satellite observations of hydrometeors</li>
+<li>From observations to measurements</li>
+<li>Results</li>
+<li>Summary and future work</li>
+
+</ol>
+
+</section>
+</section>
+<section>
+<section id="slide-org17ad8d8">
+<h2 id="org17ad8d8">Satellite observations of hydrometeors</h2>
+
+<div id="org2d39415" class="figure">
+<p><img src="./observations.svg" alt="observations.svg" class="org-svg" width="80%" style="margin: 4em auto 4em auto; display: block;" />
+</p>
+</div>
+</section>
+<section id="slide-org0819d0d">
+<h3 id="org0819d0d">Satellite observations across the electromagnetic spectrum</h3>
+<div class="column" style="float:left; width: 40%; height: 100%">
+<ul class="org-ul">
+<li><a id="org392f1b5"></a><b><b>Impact of the wavelength</b></b><br />
+<ul>
+<li>Short wavelelengths dominated by solar radiation</li>
+<li>Longer wavelengths (\(\lambda > 3 \mu\)) dominated by thermal emission</li>
+<li>Sensitivity to hydrometeors determined by phase as well as
+size in relation to wavelength.</li>
+
+</ul>
+
+</div>
+<div class="column" style="float:right; width: 60%;">
+<div class="org-center">
+
+<div id="org99f26da" class="figure">
+<p><img src="./spectrum_complete.png" alt="spectrum_complete.png" width="95%" style="margin: auto; display: block;" />
+</p>
+</div>
+</div>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-orga6c4832" data-background="./radar.gif" data-background-size="auto 100%" data-background-position="130% 100%" data-background-transition="slide">
+<h3 id="orga6c4832">Sensor types</h3>
+<div class="column" style="float:left; width: 70%; height: 100%">
+<ul class="org-ul">
+<li><a id="org81dff30"></a><b>Active sensors</b><br />
+<ul>
+<li>Emit radiation and measure how much is reflected</li>
+<li>High sensitivity and vertical resolution</li>
+<li>Limited horizontal coverage</li>
+
+</ul>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-orge9903c4" data-background="./radiometer.gif" data-background-size="auto 100%" data-background-position="130% 100%" data-background-transition="none">
+<h3 id="orge9903c4">Sensor types</h3>
+<div class="column" style="float:left; width: 70%; height: 100%">
+<ul class="org-ul">
+<li><a id="orga85bdfb"></a><b>Passive sensors</b><br />
+<ul>
+<li>Measure reflected sunlight or thermal emission from Earth and its atmosphere</li>
+<li>Limited vertical resolution</li>
+<li>Higher horizontal coverage</li>
+
+</ul>
+</div>
+</li>
+</ul>
+
+
+</section>
+<section id="slide-org581b8d5">
+<h3 id="org581b8d5">Orbit types</h3>
+<div class="column" style="float:left; width: 50%;">
+<ul class="org-ul">
+<li><a id="org37bf526"></a><b>Geostationary</b><br />
+<ul>
+<li>Rotate at the same velocity as the Earth</li>
+<li>Placed on fixed point over equator</li>
+<li>Long distance from Earth (~ 36 000 km)</li>
+<li>Limited to passive sensors and visible and infrared wavelengths</li>
+
+</ul>
+</li>
+<li><a id="org1f1b95a"></a><b>Low-Earth orbit</b><br />
+<ul>
+<li>Low orbit</li>
+<li>Limited spatial coverage</li>
+<li>Suitable for active and microwave sensors</li>
+
+</ul>
+</div>
+<div class="column" style="float:right; width: 50%;">
+<div class="org-center">
+
+<div id="orgd8c1db7" class="figure">
+<p><img src="./viewing_geometries.png" alt="viewing_geometries.png" width="100%" style="margin: auto; display: block;" />
+</p>
+</div>
+</div>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-orgad9b023">
+<h3 id="orgad9b023">Synergies</h3>
+<div class="column" style="float:left; width: 40%;">
+<ul class="org-ul">
+<li><a id="org9cbb37a"></a><b>Problem</b><br />
+<ul>
+<li>Sensor and satellite type determine measurement characteristics</li>
+
+</ul>
+</li>
+
+<li><a id="org70fba3c"></a><b>Solution</b><br />
+<ul>
+<li>Combine strengths of different sensor and satellite types into</li>
+<li>Example: <b>The Global Precipitation Measurment (GPM)</b>:
+<ol>
+<li>Core observatory with radar and passive microwave sensor</li>
+<li>Constellation of passive microwave sensors</li>
+<li>Geostationary sensors</li>
+
+</ol></li>
+
+</ul>
+</div>
+
+<div class="column" style="float:right; width: 60%;">
+<div class="org-center">
+<div class="r-stack">
+  <img class="fragment fade-out" data-fragment-index="0" src="./core_observatory.gif" width="100%">
+  <img class="fragment current-visible" data-fragment-index="0" src="./constellation.gif" width="100%">
+</div>
+</div>
+</div>
+</li>
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org40bb75a">
+<h2 id="org40bb75a">From observations to measurements</h2>
+<div class="column" style="float:right; width: 70%;">
+
+<div id="orgadb90c5" class="figure">
+<p><img src="./retrieval_1.png" alt="retrieval_1.png" width="100%" style="margin: auto; display: block;" />
+</p>
+</div>
+</div>
+
+</section>
+<section id="slide-org8565f44">
+<h3 id="org8565f44">From observations to measurements</h3>
+<div class="column" style="float:left; width: 30%;">
+<ul class="org-ul">
+<li><a id="orgffccf5e"></a><b>Machine-learning based retrievals</b><br />
+<ul>
+<li>Learn mapping \(y = f(\mathbf{x})\) from data</li>
+
+</ul>
+</div>
+<div class="column" style="float:right; width: 70%;">
+
+<div id="orgcb63f48" class="figure">
+<p><img src="./retrieval_ml.png" alt="retrieval_ml.png" width="100%" style="margin: auto; display: block;" />
+</p>
+</div>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-orge24d70a">
+<h3 id="orge24d70a">Neural networks</h3>
+<div class="column" style="float:left; width: 40%;">
+<ul class="org-ul">
+<li><a id="org66e20db"></a><b>Fully-connected neural networks</b><br />
+<ul>
+<li>Consists of a sequence of <font color="7137c8">parametrized</font> transformations (layers)</li>
+<li><font color="7137c8">Parameters</font> are learned from training data by minimizing a loss function</li>
+
+</ul>
+</div>
+<div class="column" style="float:right; width: 60%;">
+<div class="r-stack">
+  <img class="fragment fade-out" data-fragment-index="0" src="./fully_connected_1.png" width="80%">
+  <img class="fragment current-visible" data-fragment-index="0" src="./fully_connected_2.png" width="80%">
+  <img class="fragment" src="./fully_connected_3.png" width="80%">
+</div>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-org2ae423c">
+<h3 id="org2ae423c">Neural networks</h3>
+<div class="column" style="float:left; width: 40%;">
+<ul class="org-ul">
+<li><a id="org82afe4e"></a><b>Convolutional neural networks</b><br />
+<ul>
+<li>Fully-connected neural networks don't work well with 
+
+<ul>
+<li>Consists of a sequence of <font color="7137c8">parametrized</font> transformations (layers)</li>
+<li><font color="7137c8">Parameters</font> are learned from training data by minimizing a loss function</li>
+
+</ul></li>
+
+</ul>
+</div>
+<div class="column" style="float:right; width: 60%;">
+<div class="r-stack">
+  <img class="fragment fade-out" data-fragment-index="0" src="./convolution.png" width="60%">
+  <img class="fragment current-visible" data-fragment-index="0" src="./encoder_decoder.png" width="80%">
+</div>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-org6ad4e4d">
+<h3 id="org6ad4e4d">Bayesian retrieval methods</h3>
+<div class="column" style="float:left; width: 40%;">
+<ul class="org-ul">
+<li><a id="orgda2b9ff"></a><b>Problem</b><br />
+<ul>
+<li>Cannot associate unique solution \(\mathbf{y}\) to
+observations \(\mathbf{x}\)</li>
+
+</ul>
+</li>
+<li><a id="org15b5f48"></a><b>Solution</b><br />
+<ul>
+<li>Bayesian framework:
+<ul>
+<li>Solution is posterior distribution <font color="c83737ff"> \(p(\mathbf{y}|\mathbf{x})\)</font></li>
+<li>Represents <font color="c83737ff"> <i>knowledge</i> </font> about \(\mathbf{y}\) after measurement \(\mathbf{x}\)</li>
+
+</ul></li>
+
+</ul>
+</div>
+<div class="column" style="float:right; width: 60%;">
+<div class="r-stack">
+  <img class="fragment fade-out" data-fragment-index="0" src="./retrieval_ill.png" width="100%">
+  <img class="fragment current-visible" data-fragment-index="0" src="./retrieval_ill_2.png" width="100%">
+</div>
+</div>
+</li>
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org09456cc">
+<h2 id="org09456cc">Results</h2>
+
+<div id="org5bcbeb9" class="figure">
+<p><img src="./results.png" alt="results.png" width="40%" style="display: block; margin: auto;" />
+</p>
+</div>
+
+</section>
+<section id="slide-org5b38ee7">
+<h3 id="org5b38ee7">Paper 1</h3>
+
+<div id="org623409e" class="figure">
+<p><img src="./bayesian_vs_nn.svg" alt="bayesian_vs_nn.svg" class="org-svg" width="70%" style="display: block; margin: auto;" />
+</p>
+</div>
+</section>
+<section id="slide-org03014f4">
+<h3 id="org03014f4">Paper 1</h3>
+<div class="column" style="float:left; width: 40%; height: 100%">
+<ul class="org-ul">
+<li><a id="org40314cb"></a><b>Quantile regression neural networks (QRNNs)</b><br />
+<ul>
+<li>Train neural network to predict quantiles of distribution \(p(\mathbf{y}|\mathbf{x})\)</li>
+<li>Learned solution equivalent to that ob Bayesian retrieval methods if training data is
+distributed according to the a priori distribution</li>
+
+</ul>
+</div>
+<div class="column" style="float:right; width: 60%; height: 100%">
+
+<div id="org2df3671" class="figure">
+<p><img src="./qrnn.png" alt="qrnn.png" width="80%" style="margin: 4em auto 4em auto; display: block;" />
+</p>
+</div>
+</div>
+</li>
+</ul>
+</section>
+<section id="slide-org152b422">
+<h3 id="org152b422">Paper 1</h3>
+
+<div id="org80b98f6" class="figure">
+<p><img src="./bayesian_vs_nn_2.svg" alt="bayesian_vs_nn_2.svg" class="org-svg" width="70%" />
+</p>
+</div>
+
+</section>
+<section id="slide-org9f00029" data-background="./gprof_nn_principle.png" data-background-size="auto 70%" data-background-position="90% 25%" data-background-transition="none">
+<h3 id="org9f00029">Paper 2</h3>
+<div class="column" style="float:left; width: 40%; height: 100%">
+<ul class="org-ul">
+<li><a id="orga29a213"></a><b>Background</b><br />
+<ul>
+<li>The Goddard Profiling Algorithm (GPROF) is used to retrieve surface precipitation and
+hydrometeor profiles for the passive microwave observations of GPM</li>
+
+</ul>
+</li>
+<li><a id="orge4fa2b3"></a><b><b>Research questions</b></b><br />
+<ol>
+<li>To what extent can the retrieval be improved if the current method is replaced
+with an equivalent neural-network-based implementation?</li>
+<li>Can further improvements be realized if spatial information is included in
+the retrieval?</li>
+
+</ol>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-org36cad6e">
+<h3 id="org36cad6e">Paper 2</h3>
+<div class="column" style="float:left; width: 30%; height: 100%">
+<ul class="org-ul">
+<li><a id="org73bf705"></a><b>Results</b><br />
+<ul>
+<li>Consistent improvements in retrieval accuracy across all retrieved quantities</li>
+<li>Effective resolution improved by 40%</li>
+
+</ul>
+</div>
+
+<div class="column" style="float:right; width: 70%; height: 100%">
+
+<div id="org9a25b64" class="figure">
+<p><img src="./results_scatter_gmi.png" alt="results_scatter_gmi.png" width="100%" />
+</p>
+</div>
+</div>
+</li>
+</ul>
+
+
+</section>
+<section id="slide-org8178717" data-background="./mrms_overview.png" data-background-size="auto 60%" data-background-position="115% 30%" data-background-transition="none">
+<h3 id="org8178717">Paper 3</h3>
+<div class="column" style="float:left; width: 40%; height: 100%">
+<ul class="org-ul">
+<li><a id="org4bb16f8"></a><b>Background</b><br />
+<ul>
+<li>Evaluation in Paper 2 limited to data with same statistics as training
+data</li>
+
+</ul>
+</li>
+<li><a id="org7aadbd0"></a><b><b>Research questions</b></b><br />
+<ol>
+<li>To what extent do the improvements carry over to validation
+against independent precipitation measurements?</li>
+<li>What determines the accuracy of GPROF w. r. t. ground-based measurements?</li>
+
+</ol>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-org0691233">
+<h3 id="org0691233">Paper 3</h3>
+<div class="column" style="float:left; width: 30%; height: 100%">
+<ul class="org-ul">
+<li><a id="orga644f54"></a><b>Results</b><br />
+<ul>
+<li>Improvements in retrieval accuracy confirmed</li>
+<li>Doubling of effective resolution over land</li>
+
+</ul>
+</div>
+<div class="column" style="float:right; width: 70%; height: 100%">
+<div class="r-stack">
+  <img class="fragment fade-out" data-fragment-index="0" src="./gprof_nn_validation_metrics.svg" width="100%">
+  <img class="fragment current-visible" data-fragment-index="0" src="./effective_resolution_gmi_conus.svg" width="80%">
+</div>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-orgcf27003">
+<h3 id="orgcf27003">Paper 4</h3>
+<div class="column" style="float:left; width: 40%; height: 100%">
+<ul class="org-ul">
+<li><a id="org4a83071"></a><b>Background</b><br />
+<ul>
+<li>Real-time precipitation retrieval used by the Brazilian National Space Agency
+still very simple</li>
+
+</ul>
+</li>
+<li><a id="org747d3ea"></a><b><b>Research questions</b></b><br />
+<ol>
+<li>To what extent can the retrieval be improved through the use of deep neural networks?</li>
+<li>What are the advantages of the probabilistic retrieval results?</li>
+
+</ol>
+</div>
+<div class="column" style="float:right; width: 60%; height: 100%">
+
+<div id="org86c1ed7" class="figure">
+<p><img src="./brazil_tc.png" alt="brazil_tc.png" width="65%" style="margin: auto; display: block;" />
+</p>
+</div>
+</div>
+</li>
+</ul>
+
+
+</section>
+<section id="slide-org0da865a">
+<h3 id="org0da865a">Paper 4</h3>
+<div class="column" style="float:left; width: 40%; height: 100%">
+<ul class="org-ul">
+<li><a id="orgb838c2c"></a><b>Results</b><br />
+<ul>
+<li>Significant improvements in retrieval accuracy</li>
+<li>Probabilistic retrieval improves detection of extreme precipitation events</li>
+
+</ul>
+
+</div>
+<div class="column" style="float:right; width: 60%; height: 100%">
+
+<div id="org3b8c996" class="figure">
+<p><img src="./case_study.svg" alt="case_study.svg" class="org-svg" width="65%" style="margin: auto; display: block;" />
+</p>
+</div>
+</div>
+</li>
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org36cf0de">
+<h2 id="org36cf0de">Summary and future work</h2>
+<div class="column" style="float:left; width: 30%; height: 100%">
+<ul class="org-ul">
+<li><a id="org0c40dd9"></a><b>Principal results</b><br />
+<ul>
+<li>Established equivalence between Bayesian retrieval and probabilistic NNs</li>
+<li>Demonstrated advantages of deep-learning-based retrievals</li>
+<li>Retrieval algorithms planned for use in operational processing</li>
+
+</ul>
+</div>
+<div class="column" style="float:right; width: 70%; height: 100%">
+
+<div id="org1062ddb" class="figure">
+<p><img src="./bayesian_vs_nn_2.svg" alt="bayesian_vs_nn_2.svg" class="org-svg" width="65%" style="margin: auto; display: block;" />
+</p>
+</div>
+</div>
+</li>
+</ul>
+
+</section>
+<section id="slide-orgde25e91">
+<h3 id="orgde25e91">Summary and future work</h3>
+<div class="column" style="float:left; width: 30%; height: 100%">
+<ul class="org-ul">
+<li><a id="org8ea4aaf"></a><b>Next steps</b><br />
+<ul>
+<li>Operational implementation of GPROF-NN retrievals</li>
+<li>Operational implementation of Hydronn retrievals</li>
+
+</ul>
+</li>
+<li><a id="orgb420f5a"></a><b>Future work</b><br />
+<ul>
+<li>Merging of passive microwave and geostationary imagery</li>
+<li>Further improvements of the GPM passive microwave retrievals</li>
+
+</ul>
+</div>
+</li>
+</ul>
+
+
+</section>
+<section id="slide-org291f84f">
+<h3 id="org291f84f">Outlook - GPROF NN High Resolution</h3>
+<div class="column" style="float:left; width: 100%; height: 100%">
+<video controls autoplay class="fragment fade-out" data-fragment-index="0" src="./ida_gprof.mp4" width="80%" style="margin: auto; display:block">
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="socket.io/socket.io.js"></script> <script src="reveal.js/node_modules/reveal-notes-server/client.js"></script>
+<script src="reveal.js/dist/reveal.js"></script>
+<script src="reveal.js/plugin/markdown/markdown.js"></script>
+<script src="reveal.js/plugin/notes/notes.js"></script>
+<script src="reveal.js/plugin/search/search.js"></script>
+<script src="reveal.js/plugin/zoom/zoom.js"></script>
+<script src="reveal.js/plugin/drawer/drawer.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+overview: true,
+width: "100%",
+height: "100%",
+
+transition: 'fade-in',
+transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealSearch, RevealZoom, RevealDrawer ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+]
+
+,dependencies: [{ src: 'http://localhost:3001/socket.io/socket.io.js', async: true }, { src: 'reveal.js/plugin/plugins/remote-control/remote.js', async: true }]});
+</script>
+</body>
+</html>
