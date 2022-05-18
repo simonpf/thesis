@@ -10,7 +10,7 @@
 #+REVEAL_EXTRA_CSS: reveal.js/plugin/drawer/drawer.css
 #+OPTIONS: toc:nil num:nil reveal_center:t reveal_height:"100%"" reveal_width:"100%"
 #+LATEX_HEADER: \usepackage[backend=biber,style=alphabetic]{biblatex}
-#+REVEAL_INIT_SCRIPT: dependencies: [{ src: 'http://localhost:3001/socket.io/socket.io.js', async: true }, { src: 'reveal.js/plugin/plugins/remote-control/remote.js', async: true }]
+#+REVEAL_INIT_SCRIPT: dependencies: [{ src: 'http://localhost:3001/socket.io/socket.io.js', async: true }, { src: 'reveal.js/plugins/remote-control/remote.js', async: true }]
 #+REVEAL_POSTAMBLE: <script src="socket.io/socket.io.js"></script> <script src="reveal.js/node_modules/reveal-notes-server/client.js"></script>
 #+bibliography: references.bib
 #+cite_export: csl
