@@ -28,13 +28,13 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="0.71358681"
-     inkscape:cx="446.33673"
-     inkscape:cy="160.457"
+     inkscape:zoom="1.0091641"
+     inkscape:cx="364.16278"
+     inkscape:cy="215.52491"
      inkscape:window-width="1900"
-     inkscape:window-height="1038"
+     inkscape:window-height="1000"
      inkscape:window-x="8"
-     inkscape:window-y="8"
+     inkscape:window-y="48"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
@@ -1242,34 +1242,34 @@
        xml:space="preserve"
        style="font-size:4.9389px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;fill:#217844;fill-opacity:0.839216;stroke-width:0.264583"
        x="131.25656"
-       y="95.473747"
+       y="102.07056"
        id="text56364"><tspan
          sodipodi:role="line"
          id="tspan56362"
          style="fill:#217844;fill-opacity:0.839216;stroke-width:0.264583"
          x="131.25656"
-         y="95.473747">+ Fast</tspan></text>
+         y="102.07056">+ Fast</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:4.9389px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;fill:#217844;fill-opacity:0.839216;stroke-width:0.264583"
        x="131.25656"
-       y="102.07056"
+       y="108.66736"
        id="text63626"><tspan
          sodipodi:role="line"
          id="tspan63624"
          style="fill:#217844;fill-opacity:0.839216;stroke-width:0.264583"
          x="131.25656"
-         y="102.07056">+ Flexible handling of inputs </tspan></text>
+         y="108.66736">+ Flexible handling of inputs </tspan></text>
     <text
        xml:space="preserve"
        style="font-size:4.9389px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;fill:#c83737;fill-opacity:1;stroke-width:0.264583"
        x="131.30479"
-       y="108.66736"
+       y="95.473747"
        id="text81289"><tspan
          sodipodi:role="line"
          id="tspan81287"
          style="fill:#c83737;fill-opacity:1;stroke-width:0.264583"
          x="131.30479"
-         y="108.66736">- Can't handle uncertainties</tspan></text>
+         y="95.473747">- Don't handle uncertainties</tspan></text>
   </g>
 </svg>

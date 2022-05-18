@@ -29,8 +29,8 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="1.1605633"
-     inkscape:cx="367.49395"
-     inkscape:cy="143.46481"
+     inkscape:cx="364.90901"
+     inkscape:cy="143.46482"
      inkscape:window-width="1900"
      inkscape:window-height="1038"
      inkscape:window-x="8"
@@ -1528,18 +1528,18 @@
          id="tspan19922"
          style="fill:#217844;fill-opacity:1;stroke-width:0.264583"
          x="13.389645"
-         y="95.473747">+ Can handle uncertainties</tspan></text>
+         y="95.473747">+ Handle uncertainties</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:4.9389px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;fill:#217844;fill-opacity:1;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:round"
        x="131.25656"
-       y="109.18192"
+       y="95.473747"
        id="text19924-9"><tspan
          sodipodi:role="line"
          id="tspan19922-1"
          style="fill:#217844;fill-opacity:1;stroke-width:0.264583"
          x="131.25656"
-         y="109.18192">+ Can handle uncertainties</tspan></text>
+         y="95.473747">+ Handle uncertainties</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:4.9389px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;fill:#c83737;stroke-width:0.264583"
@@ -1566,24 +1566,24 @@
        xml:space="preserve"
        style="font-size:4.9389px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;fill:#217844;fill-opacity:0.839216;stroke-width:0.264583"
        x="131.25656"
-       y="95.473747"
+       y="102.07056"
        id="text56364"><tspan
          sodipodi:role="line"
          id="tspan56362"
          style="fill:#217844;fill-opacity:0.839216;stroke-width:0.264583"
          x="131.25656"
-         y="95.473747">+ Fast</tspan></text>
+         y="102.07056">+ Fast</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:4.9389px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;fill:#217844;fill-opacity:0.839216;stroke-width:0.264583"
        x="131.25656"
-       y="102.07056"
+       y="108.66736"
        id="text63626"><tspan
          sodipodi:role="line"
          id="tspan63624"
          style="fill:#217844;fill-opacity:0.839216;stroke-width:0.264583"
          x="131.25656"
-         y="102.07056">+ Flexible handling of inputs </tspan></text>
+         y="108.66736">+ Flexible handling of inputs </tspan></text>
     <g
        inkscape:label=""
        transform="translate(1.4130672,-21.64589)"
